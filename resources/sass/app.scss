@@ -1,0 +1,129 @@
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+@import 'node_modules/bulma/bulma';
+// Variables
+@import "bulma";
+
+@import "bulmaCalendar.sass"
+
+body {
+    .orange {
+        background: #6c63ff;
+        color: #ffff;
+        border: none;
+    }
+
+    .navbar {
+        min-height: 90px;
+
+        .navbar-brand {
+            a {
+                display: flex;
+                align-items: center;
+            }
+
+            img {
+                height: 50px !important;
+            }
+        }
+    }
+
+    .header {
+        background: url('../assets/images/undraw_book_lover_mkck.svg');
+        background-repeat: no-repeat;
+        background-position-x: 15%;
+        background-position-y: 140px;
+        background-size: 30%;
+        min-height: 630px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        .header-content {
+            width: 530px;
+            height: 330px;
+            float: right;
+
+            h2 {
+                font-size: 3rem;
+                font-weight: 900;
+                line-height: 42px;
+            }
+
+            p {
+                font-size: 1.2rem;
+                margin-top: 10px;
+            }
+
+            .counter-wrapper {
+                margin-top: 50px;
+
+                .counter {
+                    h3 {
+                        margin: 0;
+                        line-height: 25px;
+                    }
+
+                    display: flex;
+                    align-items: center;
+                    text-align: center;
+                    width: 120px;
+                    display: inline-block;
+                    margin-right: 3px;
+                    background: #ddd;
+                    color: white;
+                    border-radius: 4px;
+                    vertical-align: bottom;
+                    box-sizing: border-box;
+                    padding: 5px;
+                    font-size: 1.2rem;
+                }
+
+                .counter:nth-child(1) {
+                    height: 60px;
+                    background: #bebebe;
+                }
+
+                .counter:nth-child(2) {
+                    height: 100px;
+                    background: #a7a7a7;
+                }
+
+                .counter:nth-child(3) {
+                    height: 80px;
+                    background: #8f8f8f;
+                }
+
+                .counter:nth-child(4) {
+                    height: 160px;
+                    background: #777777;
+
+                }
+            }
+        }
+    }
+}
+
+.form-card {
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-box-shadow: 4px 4px 8px 0px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 4px 4px 8px 0px rgba(50, 50, 50, 0.5);
+    box-shadow: 4px 4px 8px 0px rgba(50, 50, 50, 0.5);
+    background: #eeeeee;
+    padding: 25px;
+    border-radius: 8px;
+
+    .form-head {
+        height: 40px;
+        border-bottom: solid #a0a0a0 .5px;
+    }
+
+    .form-body {
+        margin-top: 20px;
+        button[type="submit"] {
+            background: #6c63ff;
+        }
+    }
+}
