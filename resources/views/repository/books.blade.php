@@ -61,7 +61,7 @@
                                     {{Auth::user()->name}}
                                 </td>                               
                                 <td>
-                                    <a href ="{{url('journals/'.$repository->id.'/edit')}}">
+                                    <a href ="{{url('books/'.$repository->id.'/edit')}}">
                                     <img src="https://img.icons8.com/ios/30/000000/edit.png">
                                     </a>
                                 </td>

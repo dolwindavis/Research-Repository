@@ -53,3 +53,22 @@ $("#bookselector").change(function(){
        $("div#chaptertitle").hide();
    }
 });
+
+$("#researchselector").change(function(){
+    console.log($(this).val())
+  if($(this).val()=="external")
+  {    
+        var agency = '<option value="UGC"> UGC </option> <option value="DST" > DST </option> <option value="VGST" > VGST </option>';
+      
+        document.getElementById("agency").innerHTML =agency;
+      // $("div#internal").show();
+      // $("div#external").hide();
+    // $("#second").val($("#second option:first").val());
+  }
+   else
+   {
+             var agency = '<option value="KJC"> KJC </option>';
+            document.getElementById("agency").innerHTML =agency;
+
+   }
+});

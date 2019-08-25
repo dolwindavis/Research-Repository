@@ -43,6 +43,11 @@ class ProfileController extends Controller
             $repository =$showrepository->makeBooksRepository();
 
         }
+        elseif($request->category == 'research'){
+
+            $repository =$showrepository->makeResearchRepository();
+
+        }
 
         $repositorycount = $showrepository->countRepository();
 

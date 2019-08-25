@@ -85,11 +85,11 @@
                                         <div class="field">
                                             <div class="control">
                                                 <input class="input is-dark"  type="text"
-                                                    name="journalname" value="{{ ($journal->title == null)?old('jornalname'):$journal->jornalname }}">
+                                                    name="journalname" value="{{ ($journal->title == null)?old('journalname'):$journal->journal_name }}">
                                             </div>
-                                            @if ($errors->has('jornalname'))
+                                            @if ($errors->has('journalname'))
                                                 <p class="help is-danger">
-                                                {{ $errors->first('jornalname') }}
+                                                {{ $errors->first('journalname') }}
                                                 </p>
                                             @endif
                                         </div>

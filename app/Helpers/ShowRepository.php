@@ -3,9 +3,11 @@
 namespace App\Helpers;
 
 use App\Book;
+use App\Department;
 use App\User;
 use App\Upload;
 use App\Journal;
+use App\ResearchProject;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -105,6 +107,22 @@ class ShowRepository
         return $books;
         
     }
+    public function makeResearchRepository()
+    {
+        $researchs=$this->user->researchprojects()->get();
+
+        $researchs->each(function($item,$key){
+
+            // $item->publishdate=$this->sortPublishDate($item);
+
+            $item->authorship = $item->user_role;
+            $item->repositorycategory= "Research Projects";
+
+        });
+
+        return  $researchs;
+        
+    }
 
     public function journalDetailsSlug($slug)
     {
@@ -133,6 +151,128 @@ class ShowRepository
         $book->upload=$upload;
 
         return $book;
+
+    }
+
+    public function researchDetailsSlug($slug)
+    {
+
+        $research = ResearchProject::where('slug',$slug)->first();
+
+        // $book->publishdate=$this->sortPublishDate($book);
+
+        $upload=Upload::where('work_id',$research->id)->first();
+
+        $research->department = Department::findOrFail($research->department_id)->value('name');
+
+        $research->upload=$upload;
+
+
+        return $research;
+
+    }
+
+    public function totalRepositoryCount()
+    {
+        
+        $totalRepository = collect();
+
+        $totalRepository->push(Book::all()->count());
+        $totalRepository->push(Journal::all()->count());
+        $totalRepository->push(ResearchProject::all()->count());
+        $totalRepository->push(User::where('role','faculty')->get()->count());
+        return $totalRepository;
+
+
+
+    }
+
+
+    public function bookRepository()
+    {
+        $books=Book::with('user')->get();
+
+        $books->each(function($item,$key){
+
+            $item->publishdate=$this->sortPublishDate($item);
+
+            $item->repositorycategory= "Books";
+
+        });
+        return $books;
+    }
+
+    public function journalsRepository()
+    {
+        $journals=Journal::with('user')->get();
+
+        $journals->each(function($item,$key){
+
+            $item->publishdate=$this->sortPublishDate($item);
+
+            $item->repositorycategory= "Publications";
+
+        });
+        return $journals;
+    }
+
+    public function researchRepository()
+    {
+        $research=ResearchProject::with('user')->get();
+
+        $research->each(function($item,$key){
+
+            // $item->publishdate=$this->sortPublishDate($item);
+
+            $item->repositorycategory= "Research Project";
+
+            $item->authorship = $item->user_role;
+
+        });
+        return $research;
+    }
+
+    public function repository()
+    {
+        $journals=Journal::with('user')->get();
+
+        $books=Book::with('user')->get();
+        
+        $research =ResearchProject::with('user')->get();
+
+
+        $journals->each(function($item,$key){
+
+            $item->publishdate=$this->sortPublishDate($item);
+
+            $item->repositorycategory= "Publications";
+
+            $this->repository->push($item);
+
+        });
+
+        $books->each(function($item,$key){
+
+            $item->publishdate=$this->sortPublishDate($item);
+
+            $item->repositorycategory= "Books";
+
+            $this->repository->push($item);
+        });
+
+        $research->each(function($item,$key){
+
+            // $item->publishdate=$this->sortPublishDate($item);
+
+            $item->repositorycategory= "Research Project";
+
+            $item->authorship = $item->user_role;
+
+            $this->repository->push($item);
+        });
+
+        
+        return $this->repository;
 
     }
 

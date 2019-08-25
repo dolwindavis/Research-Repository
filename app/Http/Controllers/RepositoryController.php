@@ -25,6 +25,13 @@ class RepositoryController extends Controller
 
             return view('repository.books',compact('repository'));
 
+        }
+        else{
+
+            $repository=$showrepository->researchDetailsSlug($slug);
+
+            return view('repository.research',compact('repository')); 
+
         }       
 
     }
@@ -32,7 +39,7 @@ class RepositoryController extends Controller
     public function repositoryDownload($title,$filename)
     {   
         $path=public_path().'/uploads/'.$filename;
-
+        
         return response()->download($path, $title);
     }
 }
