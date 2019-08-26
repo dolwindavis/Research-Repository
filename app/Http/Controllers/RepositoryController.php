@@ -12,7 +12,7 @@ class RepositoryController extends Controller
     {
         $showrepository = new ShowRepository();
         
-        if($category =="Publication"){
+        if($category =="Publications"){
 
             $repository=$showrepository->journalDetailsSlug($slug);
             return view('repository.journals',compact('repository'));

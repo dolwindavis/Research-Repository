@@ -55,6 +55,8 @@ Route::get('/admin','AdminController@index');
 Route::get('/admin/books','AdminController@allBooks');
 Route::get('/admin/journals','AdminController@allJournals');
 Route::get('/admin/research','AdminController@allResearch');
+Route::get('/admin/faculties','AdminController@allFaculties');
+
 
 
 

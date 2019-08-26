@@ -18,6 +18,8 @@
   <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
         <link rel="stylesheet" href="{{ asset('css/style.css') }}"">
         <!-- <link href="bulma-calendar/dist/css/bulma-calendar.min.css" rel="stylesheet"> -->
+  <script src="{{asset('/asset/js/plugins/jquery/dist/jquery.min.js')}}"></script>
+
   
 </head>
 
@@ -107,7 +109,6 @@
     </div>
   </div>
   <!--   Core   -->
-  <script src="{{asset('/asset/js/plugins/jquery/dist/jquery.min.js')}}"></script>
   <script src="{{ asset('/asset/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
   <!--   Optional JS   -->
   <script src="{{ asset('/asset/js/plugins/clipboard/dist/clipboard.min.js')}}"></script>

@@ -11,6 +11,8 @@
             <div class="col-xl-3 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
+                <a href="{{ url('admin/faculties') }} ">
+
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Faculties</h5>
@@ -22,6 +24,7 @@
                       </div>
                     </div>
                   </div>
+</a>
                   <!-- <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
                     <span class="text-nowrap">Since last month</span>
@@ -32,6 +35,8 @@
             <div class="col-xl-3 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
+                <a href="{{ url('admin/books') }} ">
+
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Books</h5>
@@ -43,6 +48,7 @@
                       </div>
                     </div>
                   </div>
+</a>
                   <!-- <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span>
                     <span class="text-nowrap">Since last week</span>
@@ -53,6 +59,8 @@
             <div class="col-xl-3 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
+                <a href="{{ url('admin/journals') }} ">
+
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Publicaions</h5>
@@ -64,6 +72,7 @@
                       </div>
                     </div>
                   </div>
+</a>
                   <!-- <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
                     <span class="text-nowrap">Since yesterday</span>
@@ -74,6 +83,8 @@
             <div class="col-xl-3 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
+                <a href="{{ url('admin/research') }} ">
+
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Research Projects</h5>
@@ -85,6 +96,7 @@
                       </div>
                     </div>
                   </div>
+</a>
                   <!-- <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
                     <span class="text-nowrap">Since last month</span>
@@ -104,7 +116,7 @@
         <div class="col">
           <div class="card shadow">
            <div class="card-header bg-transparent">
-              <h3 class="mb-0">Add New Department</h3>
+              <h3 class="mb-0">Departments</h3>
             </div>
             <div class="card-body">
               <div class="row icon-examples">

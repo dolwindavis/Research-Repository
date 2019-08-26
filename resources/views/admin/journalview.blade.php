@@ -11,6 +11,8 @@
                 <div class="col-xl-3 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
+                        <a href="{{ url('admin/faculties') }} ">
+
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Faculties</h5>
@@ -22,6 +24,7 @@
                                     </div>
                                 </div>
                             </div>
+</a>
                             <!-- <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
                     <span class="text-nowrap">Since last month</span>
@@ -116,30 +119,85 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="form-group col-md-3">
-                            <label for="inputState">Department</label>
-                            <select id="department" class="form-control" >
-                                <option value="" selected>All Departments</option>
-                                @foreach($departments as $dep)
-                                    @if($department == $dep->id)
-                                        <option value="{{ $dep->id }}" selected> {{ $dep->name }} </option>
-                                    @else
-                                        <option value="{{ $dep->id }}"> {{ $dep->name }} </option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
                             <label for="inputState">Faculty</label>
                             <select id="faculty" class="form-control">
                                 <option value="">All faculties</option>
                                 @foreach($faculties as $fac)
-                                    @if($faculty == $fac->id)
+                                    @if($data['faculty'] == $fac->id)
                                         <option value="{{ $fac->id }}" selected> {{ $fac->name }} </option>
                                     @else
                                         <option value="{{ $fac->id }}"> {{ $fac->name }} </option>
                                     @endif  
                                 @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputState">Journal Category</label>
+                            <select id="journal-category" class="form-control" >
+                                <option value="" selected>All Category</option>
+                                @if($data['journalcategory'] == 'Journal')
+                                
+                                    <option value="Journal" selected>Journal</option>
+                                    <option value="Conference Proceeding">Conference Proceeding</option>
+                                    <option value="Newsletter">Newsletter</option>
+                                @elseif($data['journalcategory'] == 'Conference Proceeding')
+
+                                    <option value="Journal" >Journal</option>
+                                    <option value="Conference Proceeding" selected>Conference Proceeding</option>
+                                    <option value="Newsletter">Newsletter</option>
+                                @elseif($data['journalcategory'] == 'Newsletter')
+
+                                    <option value="Journal" >Journal</option>
+                                    <option value="Conference Proceeding">Conference Proceeding</option>
+                                    <option value="Newsletter" selected>Newsletter</option>
+                                @else
+                                    <option value="Journal" >Journal</option>
+                                    <option value="Conference Proceeding">Conference Proceeding</option>
+                                    <option value="Newsletter">Newsletter</option>
+                                @endif
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputState">Category</label>
+                            <select id="category" class="form-control" >
+                                <option value="" selected>All Category</option>
+                                @if($data['category'] == 'National')
+                                    <option value="National" selected>National</option>
+                                    <option value="International">Inter National</option>
+                                @elseif($data['category'] == 'Inter National')
+                                    <option value="National">National</option>
+                                    <option value="International" selected>Inter National</option>
+                                @else
+                                    <option value="National">National</option>
+                                    <option value="International">Inter National</option>
+                                @endif
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="publishyear">Published Year</label>
+                            <select id="publishyear" class="form-control" >
+                                <option value="" selected>All Published Dates</option>
+                                @for($i=0;$i<count($publishyears);$i++)
+                                    @if($publishyears[$i] == $data['year'])
+                                        <option value="{{$publishyears[$i] }}" selected>{{$publishyears[$i] }} </option>
+                                    @else
+                                        <option value="{{$publishyears[$i] }}">{{$publishyears[$i] }} </option>
+                                    @endif
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="publishmonth">Published Month</label>
+                            <select id="publishmonth" class="form-control" >
+                                <option value="" selected>All Published Dates</option>
+                                @for($i=0;$i<count($publishmonths);$i++)
+                                    @if($publishmonths[$i] == $data['month'])
+                                        <option value="{{$publishmonths[$i] }}" selected>{{$publishmonths[$i] }} </option>
+                                    @else
+                                        <option value="{{$publishmonths[$i] }}" >{{$publishmonths[$i] }} </option>
+                                    @endif
+                                @endfor
                             </select>
                         </div>
                     </div>
@@ -226,31 +284,6 @@
 
     <script>
 
-      $(document).ready(function () {
-
-                
-        $('#department').on('change', changeAdminsData);
-        // $('#session_year').on('select2:select', changeSessionData);
-        // $('#session_month').on('select2:select', changeSessionData);
-
-        function changeAdminsData(){
-
-          var dep = $('#department :selected').val();
-          
-          if(dep != ""){
-            
-            window.location.href='/admin?department='+dep;
-
-          }
-          else{
-
-            window.location.href='/admin';
-
-          }
-        }
-    });
-
-
     $(document).ready(function () {
         
         $('#faculty').on('change', changeSitesData);
@@ -259,27 +292,120 @@
 
         function changeSitesData(){
 
-          
-            var dep = $('#department :selected').val();
-    
-            
+                 
            var fac = $('#faculty :selected').val();
             
-           if(dep != "" && fac != ""){
+           if(fac != ""){
 
-            window.location='/admin?department='+dep + '&faculty=' + fac;
+             window.location='/admin/journals?faculty=' + fac;
 
-           }
-           else if(dep == "" && fac != ""){
+            }
+            else{
 
-             window.location='/admin?faculty=' + fac;
+                window.location='/admin/journals';
 
-           }
-           else if(dep != "" && fac == ""){
+            }
 
-                window.location.href='/admin?department='+dep;
+        }
+    });
 
-           }
+    $(document).ready(function () {
+        
+        $('#journal-category').on('change', changeSitesData);
+        // $('#session_year').on('select2:select', changeSessionData);
+        // $('#session_month').on('select2:select', changeSessionData);
+
+        function changeSitesData(){
+
+                 
+           var cat = $('#journal-category :selected').val();
+        
+            if(cat != ""){
+
+                window.location='/admin/journals?journalcategory=' + cat;
+
+            }
+            else{
+
+                window.location='/admin/journals';
+
+            }
+
+
+
+        }
+    });
+    $(document).ready(function () {
+        
+        $('#category').on('change', changeSitesData);
+        // $('#session_year').on('select2:select', changeSessionData);
+        // $('#session_month').on('select2:select', changeSessionData);
+
+        function changeSitesData(){
+
+                 
+            var cat = $('#category :selected').val();
+        
+            if(cat != ""){
+                window.location='/admin/journals?category=' + cat;
+            }
+            else{
+                window.location='/admin/journals';
+            }
+
+
+
+        }
+    });
+    $(document).ready(function () {
+        
+        $('#publishyear').on('change', changeSitesData);
+        // $('#session_year').on('select2:select', changeSessionData);
+        // $('#session_month').on('select2:select', changeSessionData);
+
+        function changeSitesData(){
+
+            var year = $('#publishyear :selected').val();
+
+            if(year != ""){     
+            
+                window.location='/admin/journals?year=' + year;
+
+            }
+            else{
+                window.location='/admin/journals';
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        
+        $('#publishmonth').on('change', changeSitesData);
+        // $('#session_year').on('select2:select', changeSessionData);
+        // $('#session_month').on('select2:select', changeSessionData);
+
+        function changeSitesData(){
+
+                 
+            var month = $('#publishmonth :selected').val();
+            
+            var year = $('#publishyear :selected').val();
+
+            if(year != "" && month == ""){     
+            
+            }
+            else if(year != "" && month != ""){
+
+                window.location='/admin/journals?month=' + month + '&year=' + year;
+
+            }
+            else{
+
+                window.location='/admin/journals';
+
+
+            }
+
 
         }
     });

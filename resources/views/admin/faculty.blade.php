@@ -11,6 +11,8 @@
                 <div class="col-xl-3 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
+                             <a href="{{ url('admin/faculties') }} ">
+                            
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Faculties</h5>
@@ -22,6 +24,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
                             <!-- <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
                     <span class="text-nowrap">Since last month</span>
@@ -129,34 +132,22 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputState">Faculty</label>
-                            <select id="faculty" class="form-control">
-                                <option value="">All faculties</option>
-                                @foreach($faculties as $fac)
-                                    @if($faculty == $fac->id)
-                                        <option value="{{ $fac->id }}" selected> {{ $fac->name }} </option>
-                                    @else
-                                        <option value="{{ $fac->id }}"> {{ $fac->name }} </option>
-                                    @endif  
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
                     <div class="row icon-examples">
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">SI NO</th>
-                                    <th scope="col">Category</th>
-                                    <th scope="col">Published Date</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Author</th>
-                                    <th scope="col">Authorship</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Department</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Books Number</th>
+                                    <th scope="col">Publicaions</th>
+                                    <th scope="col">Research Projects</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($repository as $key => $repo)
+                                @foreach($faculties as $key => $repo)
                                 <tr>
                                     <th scope="row">
                                         <div class="media align-items-center">
@@ -166,28 +157,33 @@
                                         </div>
                                     </th>
                                     <td>
-                                        {{$repo->repositorycategory}}
+                                        {{$repo->name}}
                                     </td>
                                     <td>
-                                        <span class="badge badge-dot mr-4">
-                                            {{$repo->publishdate}}
+                                        <span class="badge badge-dot mr-3">
+                                            {{$repo->departmentDetails->name}}
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="{{url('/repository/'.$repo->repositorycategory.'/'.$repo->slug)}}">
-                                        {{$repo->title }}
+                                        <a href="{{url('/profile/'.$repo->slug)}}">
+                                        {{$repo->email }}
                                         </a>
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center">
+                                        <div class="text-left">
                                             <div>
-                                                {{ $repo->user->name }}
+                                                {{ $repo->books->count() }}
                                             </div>
                                         </div>
                                     </td>
                                     <td class="text-left">
                                         <div>
-                                            {{ $repo->authorship }}
+                                            {{ $repo->journals->count() }}
+                                        </div>
+                                    </td>
+                                    <td class="text-left">
+                                        <div>
+                                            {{ $repo->researchprojects->count() }}
                                         </div>
                                     </td>
                                 </tr>
@@ -239,49 +235,16 @@
           
           if(dep != ""){
             
-            window.location.href='/admin?department='+dep;
+            window.location.href='/admin/faculties?department='+dep;
 
           }
           else{
 
-            window.location.href='/admin';
+            window.location.href='/admin/faculties';
 
           }
         }
     });
 
-
-    $(document).ready(function () {
-        
-        $('#faculty').on('change', changeSitesData);
-        // $('#session_year').on('select2:select', changeSessionData);
-        // $('#session_month').on('select2:select', changeSessionData);
-
-        function changeSitesData(){
-
-          
-            var dep = $('#department :selected').val();
-    
-            
-           var fac = $('#faculty :selected').val();
-            
-           if(dep != "" && fac != ""){
-
-            window.location='/admin?department='+dep + '&faculty=' + fac;
-
-           }
-           else if(dep == "" && fac != ""){
-
-             window.location='/admin?faculty=' + fac;
-
-           }
-           else if(dep != "" && fac == ""){
-
-                window.location.href='/admin?department='+dep;
-
-           }
-
-        }
-    });
 </script>
     @endsection
