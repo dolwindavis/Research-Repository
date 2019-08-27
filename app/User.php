@@ -6,8 +6,10 @@ use App\Department;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail,Searchable
 {
     use Notifiable;
 
@@ -57,5 +59,17 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $this->belongsTo(Department::class,'department_id');
 
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+       $url = route('profile', $this->slug);
+    
+        return new \Spatie\Searchable\SearchResult(
+           $this,
+           ucwords($this->name),
+           ucwords($this->departmentDetails->name),
+           $url
+        );
     }
 }

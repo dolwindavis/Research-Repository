@@ -6,11 +6,13 @@ use App\Author;
 use App\Upload;
 use App\Journal;
 use App\Bibliography;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class JournalController extends Controller
@@ -62,11 +64,12 @@ class JournalController extends Controller
             'issue' =>'numeric',
             'page' => 'required',
             'authorship' => 'required',
-            'url' => 'required_without:upload|url',
+            'url' => 'required_without:upload',
             'upload' => 'required_without:url',
             'journalname' => 'required'
         ]);
 
+        DB::transaction(function() use($request){
 
             $journal = new Journal();
 
@@ -101,7 +104,6 @@ class JournalController extends Controller
                 $file = Input::file('upload');
                 $info = pathinfo(storage_path().$file->getClientOriginalName());
                 $ext = $info['extension'];
-                // // return $ext;
                 $title = Str::slug($request->title, '-');
                 $file->move(public_path().'/uploads/',date('m-d-Y_H-i-s').'_'.$title.'.'.$ext);
                 // $domain = $_SERVER['SERVER_NAME'];
@@ -114,6 +116,10 @@ class JournalController extends Controller
         $upload->category = "journal";
         $upload->work_id = $journal->id;
         $upload->save();
+        
+    });
+        
+        Alert::success('Success', 'Journal Created Succesfully');
 
         return redirect('/profile/'.Auth::user()->slug);
         
@@ -167,7 +173,8 @@ class JournalController extends Controller
             'upload' => 'required_without:url',
         ]);
 
-
+        DB::transaction(function() use($request,$journal){
+        
             $journal->title = $request->title;
             $journal->category = $request->category;
             $journal->journal_category = $request->journal_category;
@@ -207,9 +214,12 @@ class JournalController extends Controller
                 // $upload->filename = 'uploads/'.date('m-d-Y_H-i-s').'_'.$request->title.'.'.$ext; 
                 // $path = $request->file('upload')->storeAs('upload',date('m-d-Y_H-i-s').'_'.$request->title.'.'.$ext);
             }
-        $upload->category = "journal";
-        $upload->work_id = $journal->id;
-        $upload->save();
+            $upload->category = "journal";
+            $upload->work_id = $journal->id;
+            $upload->save();
+
+        });
+        Alert::success('Update', 'Journal Updated Succesfully');
 
         return redirect('/profile/'.Auth::user()->slug);
     }

@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     @if($repository->upload->filename != null)  
-                    <table class="table is-stripped is-fullwidth">
+                    <table class="table is-fullwidth">
                        <tr> 
                        Files in This Item:
                        </tr>
@@ -34,6 +34,7 @@
                                 <td>
                                     39 KB
                                 </td>
+                                @if(Auth::user() && (Auth::user()->id == $repository->user->id || Auth::user()->role == 'admin'))
                                 <td>
                                     <a class="control" href="{{url('/repository/'.$repository->title.'/'.$repository->upload->filename.'/download')}}">
                                         <button  class="button is-link">
@@ -41,6 +42,7 @@
                                         </button>
                                     </a>
                                 </td>
+                                @endif
                         </tbody>
 
                     </table>  
@@ -51,21 +53,26 @@
     <div class="columns is-marginless is-centered">
         <div class="column is-12">
             <div class="form-card">
-                    <table class="table is-stripped is-fullwidth">                   
+                    <table class="table is-fullwidth">                   
                         <tbody>
                             <tr>
                                 <td>
                                     <b>Name</b>
                                 </td>
+                                @if(Auth::user() && (Auth::user()->id == $repository->user->id || Auth::user()->role == 'admin'))                                
                                 <td>
-                                    {{Auth::user()->name}}
-                                </td>                               
+                                    {{$repository->user->id}}
+                                </td> 
                                 <td>
                                     <a href ="{{url('journals/'.$repository->id.'/edit')}}">
                                     <img src="https://img.icons8.com/ios/30/000000/edit.png">
                                     </a>
                                 </td>
-                                
+                                @else
+                                <td>
+                                    {{$repository->user->id}}
+                                </td>
+                                @endif                            
                             </tr>
                             <tr>
                                 <td>

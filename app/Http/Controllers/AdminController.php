@@ -6,11 +6,22 @@ use App\Book;
 use App\User;
 use App\Journal;
 use App\Department;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Helpers\ShowRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth','admin']);
+    }
+
+    
     public function index(Request $request)
     {
         $showrepository = new ShowRepository();
@@ -26,7 +37,7 @@ class AdminController extends Controller
             
             $repository =$showrepository->repository();
 
-            $faculties =User::all();
+            $faculties =User::where('role','faculty')->get();
 
         }
         if($request->department && $request->faculty){
@@ -61,6 +72,53 @@ class AdminController extends Controller
         return view('admin.view',compact('repository','repositorycount','departments','faculties','department','faculty'));
     
     }
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'facultyid' => ['required', 'string','max:255', 'unique:users,fac_id'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
+
+
+    protected function create()
+    {
+
+        return view('admin.create');
+        
+    }
+   /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return \App\User
+     */
+    protected function store(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'fac_id' => $request->facultyid,
+            'department_id' => Auth::user()->id,
+            'password' => Hash::make($request->password),
+            'slug' => Str::slug($request->name.$request->facultyid),
+            'role' => 'admin'
+        ]);
+
+        return redirect('/');
+    }
+
+
 
     public function departmentIndex(){
 
@@ -162,8 +220,10 @@ class AdminController extends Controller
 
         $publishyears=$showrepository->getPublishedYears($journal);
 
-        array_unique($publishyears);
+        $publishyears=array_unique($publishyears);
 
+        sort($publishyears);
+    
         $publishmonths = [];
 
         $faculty = null; 
@@ -174,7 +234,7 @@ class AdminController extends Controller
 
         $month = null;
 
-        $faculties =User::all();
+        $faculties =User::where('role','faculty')->get();
 
         $repositorycount =  $showrepository->totalRepositoryCount();
 
@@ -200,7 +260,10 @@ class AdminController extends Controller
 
             $publishmonths=$showrepository->getBooksPublishedMonths($request->year);
 
-            array_unique($publishmonths);
+            $publishmonths=array_unique($publishmonths);
+
+            sort($publishmonths);
+        
         }
         else if($request->month){
 
@@ -212,7 +275,10 @@ class AdminController extends Controller
 
             $publishmonths=$showrepository->getBooksPublishedMonths($request->year);
 
-            array_unique($publishmonths);
+            $publishmonths=array_unique($publishmonths);
+
+            sort($publishmonths);
+        
         }
         else{
 
@@ -242,7 +308,9 @@ class AdminController extends Controller
 
         $publishyears=$showrepository->getPublishedYears($journal);
 
-        array_unique($publishyears);
+        $publishyears=array_unique($publishyears);
+
+        sort($publishyears);        
 
         $publishmonths = [];
 
@@ -256,7 +324,7 @@ class AdminController extends Controller
 
         $category = null;
 
-        $faculties =User::all();
+        $faculties =User::where('role','faculty')->get();
 
         $repositorycount =  $showrepository->totalRepositoryCount();
 
@@ -291,7 +359,10 @@ class AdminController extends Controller
 
             $publishmonths=$showrepository->getPublishedMonths($request->year);
 
-            array_unique($publishmonths);
+            $publishmonths=array_unique($publishmonths);
+
+            sort($publishmonths);
+        
         }
         else if($request->month){
 
@@ -303,7 +374,9 @@ class AdminController extends Controller
 
             $publishmonths=$showrepository->getPublishedMonths($request->year);
 
-            array_unique($publishmonths);
+            $publishmonths=array_unique($publishmonths);
+
+            sort($publishmonths);
         }
         else{
 
@@ -329,7 +402,6 @@ class AdminController extends Controller
     {
         $showrepository = new ShowRepository();
 
-
         $repositorycount =  $showrepository->totalRepositoryCount();
 
         $faculty = null;
@@ -340,9 +412,8 @@ class AdminController extends Controller
 
         $status = null; 
 
-        $faculties =User::all();
-
-
+        $faculties =User::where('role','faculty')->get();
+        
         if($request->faculty){
 
             $repository =$showrepository->researchFacultyRepository($request->faculty);

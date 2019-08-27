@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Book;
+use App\User;
+use App\Journal;
 use Illuminate\Http\Request;
+use Spatie\Searchable\Search;
 use App\Helpers\ShowRepository;
+use App\ResearchProject;
 
 class RepositoryController extends Controller
 {
@@ -14,7 +19,9 @@ class RepositoryController extends Controller
         
         if($category =="Publications"){
 
+            
             $repository=$showrepository->journalDetailsSlug($slug);
+        
             return view('repository.journals',compact('repository'));
 
         }
@@ -37,9 +44,44 @@ class RepositoryController extends Controller
     }
     
     public function repositoryDownload($title,$filename)
-    {   
-        $path=public_path().'/uploads/'.$filename;
+    {  
+        if(Auth::user()){
+
+            $path=public_path().'/uploads/'.$filename;
         
-        return response()->download($path, $title);
+            return response()->download($path, $title);
+            
+        } 
+        
+    }
+
+    public function searchUsers(Request $request)
+    {
+        $searchResults = (new Search())
+            ->registerModel(User::class,'name')
+            ->search($request->q);
+
+        $searchResults->each(function($item,$key)use(&$searchResults){
+
+            if($item->searchable->role == "admin"){
+
+                $searchResults->forget($key);
+
+            }
+
+        });
+        
+        return $searchResults->toJson();
+    }
+
+    public function searchRepo(Request $request)
+    {
+        $searchResults = (new Search())
+            ->registerModel(Journal::class, 'title')
+            ->registerModel(Book::class, 'title')
+            ->registerModel(ResearchProject::class, 'title')            
+            ->search($request->q);
+        
+        return $searchResults->toJson();
     }
 }

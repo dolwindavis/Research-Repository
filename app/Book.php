@@ -3,8 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Book extends Model
+
+class Book extends Model implements Searchable
 {
     public function user()
     {
@@ -14,5 +17,15 @@ class Book extends Model
     public function upload()
     {
         return $this->hasOne('App\Upload');
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        $url="Books";
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->user,
+            $url
+         );
     }
 }

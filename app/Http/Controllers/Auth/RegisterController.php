@@ -109,6 +109,7 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
         // $this->guard()->login($user);
+        Alert::success('Sucess', 'Welcome to the Research Repository');
 
         return $this->registered($request, $user)
                         ?: redirect($this->redirectPath());

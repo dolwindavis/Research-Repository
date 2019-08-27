@@ -68,8 +68,16 @@ class LoginController extends Controller
      */
     protected function redirectTo()
     {   
+        if(Auth::user()->role == 'faculty'){
 
-        return 'profile/'.Auth::user()->slug;
+            return 'profile/'.Auth::user()->slug;
+
+        }
+        elseif(Auth::user()->role == 'admin'){
+
+            return '/admin';
+            
+        }
 
     }
 
