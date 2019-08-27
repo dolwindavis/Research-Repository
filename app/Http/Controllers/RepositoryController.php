@@ -12,7 +12,7 @@ class RepositoryController extends Controller
     {
         $showrepository = new ShowRepository();
         
-        if($category =="Publication"){
+        if($category =="Publications"){
 
             $repository=$showrepository->journalDetailsSlug($slug);
             return view('repository.journals',compact('repository'));
@@ -25,6 +25,13 @@ class RepositoryController extends Controller
 
             return view('repository.books',compact('repository'));
 
+        }
+        else{
+
+            $repository=$showrepository->researchDetailsSlug($slug);
+
+            return view('repository.research',compact('repository')); 
+
         }       
 
     }
@@ -32,7 +39,7 @@ class RepositoryController extends Controller
     public function repositoryDownload($title,$filename)
     {   
         $path=public_path().'/uploads/'.$filename;
-
+        
         return response()->download($path, $title);
     }
 }

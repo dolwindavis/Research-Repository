@@ -144,7 +144,7 @@
             </a>
           </li>
           <li class='link'>
-            <a>
+          <a href="{{url('/profile/'.Auth::user()->slug.'?category=research') }}" > 
               <span class='icon'>
                 <i class='fa fa-search'></i>
               </span>

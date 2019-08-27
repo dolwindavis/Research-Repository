@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Upload;
+use App\Department;
 use App\ResearchProject;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class ResearchProjectController extends Controller
 {
@@ -13,8 +19,9 @@ class ResearchProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('researches.view');
+    {   
+        $departments = Department::all();
+        return view('researches.view',compact('departments'));
     }
 
     /**
@@ -34,8 +41,48 @@ class ResearchProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    { 
+          
+        $validatedData = $request->validate([
+            'title' => 'required | max:255',
+            'research_category' =>'required',
+            'project_code' =>'required',
+            'department_id' => 'required',
+            'user_role' => 'required',
+            'duration' =>'required',
+            'amount' => 'required',
+            'agency' =>'required',
+            'status' => 'required',
+        ]);
+        
+        $request->request->add(['fac_id' => Auth::user()->id,
+                                'slug' => Str::slug($request->title.$request->project_code, '-')]);
+
+        DB::transaction(function() use($request){
+
+            $research=ResearchProject::create($request->all());
+
+            $upload = new Upload();
+
+            if(Input::hasFile('upload')){
+            
+                $file = Input::file('upload');
+                $info = pathinfo(storage_path().$file->getClientOriginalName());
+                $ext = $info['extension'];
+                $title = Str::slug($request->title, '-');
+                $file->move(public_path().'/uploads/',date('m-d-Y_H-i-s').'_'.$title.'.'.$ext);
+
+                $upload->filename =date('m-d-Y_H-i-s').'_'.$title.'.'.$ext; 
+
+                $upload->category = "Project";
+                $upload->work_id = $research->id;
+                $upload->save();
+            }
+            
+        });
+        
+        return redirect('/profile/'.Auth::user()->slug);
+
     }
 
     /**
@@ -55,9 +102,12 @@ class ResearchProjectController extends Controller
      * @param  \App\ResearchProject  $researchProject
      * @return \Illuminate\Http\Response
      */
-    public function edit(ResearchProject $researchProject)
+    public function edit($id)
     {
-        //
+        $research = ResearchProject::findOrFail($id);
+
+        $departments = Department::all();
+        return view('researches.edit',compact('research','departments'));
     }
 
     /**
@@ -67,9 +117,52 @@ class ResearchProjectController extends Controller
      * @param  \App\ResearchProject  $researchProject
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ResearchProject $researchProject)
+    public function update(Request $request,$id)
     {
-        //
+
+        $validatedData = $request->validate([
+            'title' => 'required | max:255',
+            'research_category' =>'required',
+            'project_code' =>'required',
+            'department_id' => 'required',
+            'user_role' => 'required',
+            'duration' =>'required',
+            'amount' => 'required',
+            'agency' =>'required',
+            'status' => 'required',
+        ]);
+        
+        $request->request->add(['fac_id' => Auth::user()->id,
+                                'slug' => Str::slug($request->title.$request->project_code, '-')]);
+
+        DB::transaction(function() use($request,$id){
+
+            $research = ResearchProject::findOrFail($id);
+
+            $research->fill($request->all());
+
+            $research->save();
+
+            if(Input::hasFile('upload')){
+                
+                $upload = Upload::where('work_id',$id)->first();
+                $file = Input::file('upload');
+
+                $info = pathinfo(storage_path().$file->getClientOriginalName());
+                $ext = $info['extension'];
+                $title = Str::slug($request->title, '-');
+                $file->move(public_path().'/uploads/',date('m-d-Y_H-i-s').'_'.$title.'.'.$ext);
+
+                $upload->filename =date('m-d-Y_H-i-s').'_'.$title.'.'.$ext;
+
+                $upload->category = "Project";
+                $upload->work_id = $research->id;
+                $upload->save();
+            }
+            
+        });
+        
+        return redirect('/profile/'.Auth::user()->slug); 
     }
 
     /**

@@ -50,7 +50,6 @@ class JournalController extends Controller
      */
     public function store(Request $request)
     {
-
         
         $validatedData = $request->validate([
             'title' => 'required',
@@ -107,7 +106,7 @@ class JournalController extends Controller
                 $file->move(public_path().'/uploads/',date('m-d-Y_H-i-s').'_'.$title.'.'.$ext);
                 // $domain = $_SERVER['SERVER_NAME'];
 
-                $upload->filename =date('m-d-Y_H-i-s').'_'.$request->title.'.'.$ext; 
+                $upload->filename =date('m-d-Y_H-i-s').'_'.$title.'.'.$ext; 
 
                 // $upload->filename = 'uploads/'.date('m-d-Y_H-i-s').'_'.$request->title.'.'.$ext; 
                 // $path = $request->file('upload')->storeAs('upload',date('m-d-Y_H-i-s').'_'.$request->title.'.'.$ext);
@@ -199,12 +198,11 @@ class JournalController extends Controller
                 $file = Input::file('upload');
                 $info = pathinfo(storage_path().$file->getClientOriginalName());
                 $ext = $info['extension'];
-                // // return $ext;
                 $title = Str::slug($request->title, '-');
                 $file->move(public_path().'/uploads/',date('m-d-Y_H-i-s').'_'.$title.'.'.$ext);
                 // $domain = $_SERVER['SERVER_NAME'];
 
-                $upload->filename =date('m-d-Y_H-i-s').'_'.$request->title.'.'.$ext; 
+                $upload->filename =date('m-d-Y_H-i-s').'_'.$title.'.'.$ext; 
 
                 // $upload->filename = 'uploads/'.date('m-d-Y_H-i-s').'_'.$request->title.'.'.$ext; 
                 // $path = $request->file('upload')->storeAs('upload',date('m-d-Y_H-i-s').'_'.$request->title.'.'.$ext);

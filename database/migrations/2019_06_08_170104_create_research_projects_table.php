@@ -16,17 +16,16 @@ class CreateResearchProjectsTable extends Migration
         Schema::create('research_projects', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('project_id');
-            $table->string('category');
-            $table->date('publish_date');
+            $table->string('project_code');
+            $table->string('research_category');
             $table->integer('department_id');
+            $table->integer('duration');
             $table->float('amount');
             $table->string('status');
             $table->string('user_role');
-            $table->string('research_cat');
-            $table->string('agency')->nullable();  
+            $table->string('agency');  
             $table->string('fac_id');
-            $table->string('slug')->nullable();
+            $table->string('slug');
             $table->timestamps();
         });
     }

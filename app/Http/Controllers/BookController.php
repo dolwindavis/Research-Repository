@@ -26,7 +26,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('books.view');
+        $book = collect();
+        $book->title = null;
+        return view('books.view',compact('book'));
     }
 
     /**
@@ -47,8 +49,6 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-
-        
 
         $validatedData = $request->validate([
             'title' => 'required',
@@ -101,7 +101,7 @@ class BookController extends Controller
                 $title = Str::slug($request->title, '-');
                 $file->move(public_path().'/uploads/',date('m-d-Y_H-i-s').'_'.$title.'.'.$ext);
 
-                $upload->filename =date('m-d-Y_H-i-s').'_'.$request->title.'.'.$ext; 
+                $upload->filename =date('m-d-Y_H-i-s').'_'.$title.'.'.$ext; 
 
             }
         $upload->category = "book";
@@ -130,7 +130,8 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        $book->upload = Upload::where('work_id',$book->id)->first();
+        return view('books.view',compact('book'));
     }
 
     /**
@@ -142,7 +143,63 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'month' =>'required|numeric',
+            'year' => 'required|numeric',
+            'book_category' => 'required',
+            'chaptertitle' => Rule::requiredIf($request->book_category == 'chapter'),
+            'issn_isbn_no' => 'required|size:9',
+            'vol' => 'numeric',
+            'issue' =>'numeric',
+            'page' => 'string',
+            'authorship' => 'required|string',
+            'url' => 'required_without:upload|url',
+            'upload' => 'required_without:url',
+            'publish_detail' => 'required'
+        ]);
+        $book->title = $request->title;
+        $book->book_category = $request->book_category;
+        if($request->chaptertitle){$book->chapter_title = $request->chaptertitle;}
+        $book->issn_isbn_no = $request->issn_isbn_no;
+        $book->publication_details = $request->publish_detail;
+        $book->slug= Str::slug($request->title.$request->issn_isbn_no, '-');
+        $book->faculty_id    = Auth::user()->fac_id;
+        if($request->vol){$book->bibliography_vol = $request->vol;}
+        if($request->issue){$book->bibliography_issue = $request->issue;}
+        if($request->page){$book->bibliography_pages = $request->page;}
+        if($request->date){$book->date = $request->date;}
+        if($request->month){$book->month = $request->month;}
+        $book->year=$request->year;
+        $book->authorship=$request->authorship;
+        $book->user_id=Auth::user()->id;
+
+        $book->save();
+
+        $upload=Upload::where('work_id',$book->id)->first();
+
+            if($request->url){
+
+                $upload->url = $request->url;
+
+            }
+            if(Input::hasFile('upload')){
+            
+                $file = Input::file('upload');
+                $info = pathinfo(storage_path().$file->getClientOriginalName());
+                $ext = $info['extension'];
+                // // return $ext;
+                $title = Str::slug($request->title, '-');
+                $file->move(public_path().'/uploads/',date('m-d-Y_H-i-s').'_'.$title.'.'.$ext);
+
+                $upload->filename =date('m-d-Y_H-i-s').'_'.$title.'.'.$ext; 
+
+            }
+        $upload->category = "book";
+        $upload->work_id = $book->id;
+        $upload->save();
+
+        return redirect('/profile/'.Auth::user()->slug);
     }
 
     /**

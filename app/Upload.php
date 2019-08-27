@@ -10,4 +10,6 @@ class Upload extends Model
     {
         return $this->belongsTo('App\journal','work_id');
     }
+
+    
 }

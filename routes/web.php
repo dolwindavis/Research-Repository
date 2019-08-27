@@ -35,18 +35,36 @@ Route::get('/profile/{slug}','ProfileController@index')->name('profile');
 Route::get('/repository/{title}/{filename}/download','RepositoryController@repositoryDownload');
 Route::get('/repository/{category}/{slug}','RepositoryController@index')->name('repository');
 
-
+//department Routes
+Route::get('/admin/department','AdminController@departmentIndex');
+Route::get('/admin/department/add','AdminController@addDepartmentIndex');
+Route::post('/admin/department/add','AdminController@addDepartment')->name('addDepartment');
+Route::get('/admin/department/remove','AdminController@removeDepartment');
+Route::get('/admin/department/edit/{id}','AdminController@editDepartment');
+Route::post('/admin/department/update/{id}','AdminController@updateDepartment');
 
 //resourcses Routes
 Route::resource('/journals', 'JournalController');
 Route::resource('/books', 'BookController');
 Route::resource('/projects', 'ResearchProjectController');
-Route::resource('/departments', 'DepartmentController');
+// Route::resource('/departments', 'DepartmentController');
 Route::resource('/indexing', 'IndexingTypeController');
 
 //admin routes
 Route::get('/admin','AdminController@index');
-Route::get('/admin/departement/add','AdminController@departmentIndex');
-Route::post('/admin/departement/add','AdminController@addDepartment')->name('addDepartment');
+Route::get('/admin/books','AdminController@allBooks');
+Route::get('/admin/journals','AdminController@allJournals');
+Route::get('/admin/research','AdminController@allResearch');
+Route::get('/admin/faculties','AdminController@allFaculties');
+
+
+
+
+
+
+
+
+
+
 
 
