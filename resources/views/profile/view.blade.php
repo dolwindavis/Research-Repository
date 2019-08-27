@@ -5,6 +5,7 @@
 
   <div class='columns'>
   <div class='container profile'>
+    @if(Auth::user() && Auth::user()->id == $user->id)
   <form action="{{url('/profile/update')}}" method="POST">
   @csrf
     <div class='modal' id='edit-preferences-modal'>
@@ -90,26 +91,30 @@
       </div>
     </div>
 </form>
+@endif
     <div class='section profile-heading'>
       <div class='columns is-mobile is-multiline'>
         <div class='column is-2'>
           <span class='header-icon user-profile-image'>   
-                <img alt=''src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}&size=300">
+                <img alt=''src="https://ui-avatars.com/api/?name={{ $user->name }}&size=300">
           </span>
         </div>
         <div class='column is-4-tablet is-10-mobile name'>
           <p>
-            <span class='title is-bold'>{{ Auth::user()->name }}</span>
+            <span class='title is-bold'>{{ ucwords($user->name) }}</span>
+            @if(Auth::user() && Auth::user()->id == $user->id )
             <br>
             <a class='button is-primary is-outlined' href='#' id='edit-preferences' style='margin: 5px 0'>
               Edit Details
             </a>
             <br>
+            @endif
           </p>
           <!-- <p class='tagline'>
             The users profile bio would go here, of course. It could be two lines or more or whatever. We should probably limit the amount of characters to ~500 at most though.
           </p> -->
         </div>
+        
         <div class='column is-2-tablet is-4-mobile has-text-centered'>
           <p class='stat-val'>{{ $repositorycount[1] }}</p>
           <p class='stat-key'>Books</p>
@@ -128,7 +133,7 @@
       <div class='tabs is-fullwidth is-medium'>
         <ul>
           <li class='link'>
-            <a href="{{url('/profile/'.Auth::user()->slug.'?category=books') }}">
+            <a href="{{url('/profile/'.$slug.'?category=books') }}">
               <span class='icon'>
                 <i class='fa fa-list'></i>
               </span>
@@ -136,7 +141,7 @@
             </a>
           </li>
           <li class='link'>
-            <a href="{{url('/profile/'.Auth::user()->slug.'?category=journals') }}" >
+            <a href="{{url('/profile/'.$slug.'?category=journals') }}" >
               <span class='icon'>
                 <i class='fa fa-thumbs-up'></i>
               </span>
@@ -144,7 +149,7 @@
             </a>
           </li>
           <li class='link'>
-          <a href="{{url('/profile/'.Auth::user()->slug.'?category=research') }}" > 
+          <a href="{{url('/profile/'.$slug.'?category=research') }}" > 
               <span class='icon'>
                 <i class='fa fa-search'></i>
               </span>
@@ -152,7 +157,7 @@
             </a>
           </li>
           <!-- <li class='link'>
-            <a>
+            <a>Auth::user()
               <span class='icon'>
                 <i class='fa fa-balance-scale'></i>
               </span>

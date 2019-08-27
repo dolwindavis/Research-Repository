@@ -21,18 +21,20 @@ class ShowRepository
         $this->user=Auth::user();
     }
 
-    function makeAuthRepository()
+    function makeAuthRepository($user)
     {
 
-        $authjournals =$this->user->journals()->get();
+        $authjournals =$user->journals()->get();
 
-        $authbooks = $this->user->books()->get();
+        $authbooks = $user->books()->get();
        
+        $authresearch = $user->researchprojects()->get();
+
         $authjournals->each(function($item,$key){
 
             $item->publishdate=$this->sortPublishDate($item);
 
-            $item->repositorycategory= "Publication";
+            $item->repositorycategory= "Publications";
 
             $this->repository->push($item);
 
@@ -47,38 +49,47 @@ class ShowRepository
             $this->repository->push($item);
         });
 
+        $authresearch->each(function($item,$key){
+
+            // $item->publishdate=$this->sortPublishDate($item);
+
+            $item->repositorycategory= "Research Project";
+
+            $item->authorship = $item->user_role;
+            
+            $this->repository->push($item);
+        });
+
         // return $authjournals;
 
         return $this->repository;
     }
 
 
-    public function countRepository()
+    public function countRepository($user)
     {
         // $user=Auth::user();
 
-        $journals=$this->user->journals()->count();
+        $journals=$user->journals()->count();
 
-        $books=$this->user->books()->count();
+        $books=$user->books()->count();
+
+        $projects = $user->researchprojects->count();
+
 
         $totalRepository = collect();
 
         $totalRepository->push($journals);
         $totalRepository->push($books);
-        // $totalRepository->push($projects);
-
-
-        $totalRepository->push(0);
-        
-
+        $totalRepository->push($projects);       
 
         return $totalRepository;
         
     }
     
-    public function makeJournalsRepository()
+    public function makeJournalsRepository($user)
     {
-        $journals=$this->user->journals()->get();
+        $journals=$user->journals()->get();
 
         $journals->each(function($item,$key){
 
@@ -92,9 +103,9 @@ class ShowRepository
         
     }
 
-    public function makeBooksRepository()
+    public function makeBooksRepository($user)
     {
-        $books=$this->user->books()->get();
+        $books=$user->books()->get();
 
         $books->each(function($item,$key){
 
@@ -107,9 +118,9 @@ class ShowRepository
         return $books;
         
     }
-    public function makeResearchRepository()
+    public function makeResearchRepository($user)
     {
-        $researchs=$this->user->researchprojects()->get();
+        $researchs=$user->researchprojects()->get();
 
         $researchs->each(function($item,$key){
 

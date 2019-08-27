@@ -11,17 +11,19 @@
                 <div class="col-xl-3 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Faculties</h5>
-                                    <span class="h2 font-weight-bold mb-0">{{$repositorycount[3]}}</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-bar"></i>
+                            <a href="{{ url('admin/faculties') }} ">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Faculties</h5>
+                                        <span class="h2 font-weight-bold mb-0">{{$repositorycount[3]}}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                            <i class="fas fa-chart-bar"></i>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                             <!-- <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
                     <span class="text-nowrap">Since last month</span>
@@ -118,14 +120,14 @@
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="inputState">Department</label>
-                            <select id="department" class="form-control" >
+                            <select id="department" class="form-control">
                                 <option value="" selected>All Departments</option>
                                 @foreach($departments as $dep)
-                                    @if($department == $dep->id)
-                                        <option value="{{ $dep->id }}" selected> {{ $dep->name }} </option>
-                                    @else
-                                        <option value="{{ $dep->id }}"> {{ $dep->name }} </option>
-                                    @endif
+                                @if($department == $dep->id)
+                                <option value="{{ $dep->id }}" selected> {{ $dep->name }} </option>
+                                @else
+                                <option value="{{ $dep->id }}"> {{ $dep->name }} </option>
+                                @endif
                                 @endforeach
                             </select>
                         </div>
@@ -134,11 +136,11 @@
                             <select id="faculty" class="form-control">
                                 <option value="">All faculties</option>
                                 @foreach($faculties as $fac)
-                                    @if($faculty == $fac->id)
-                                        <option value="{{ $fac->id }}" selected> {{ $fac->name }} </option>
-                                    @else
-                                        <option value="{{ $fac->id }}"> {{ $fac->name }} </option>
-                                    @endif  
+                                @if($faculty == $fac->id)
+                                <option value="{{ $fac->id }}" selected> {{ $fac->name }} </option>
+                                @else
+                                <option value="{{ $fac->id }}"> {{ $fac->name }} </option>
+                                @endif
                                 @endforeach
                             </select>
                         </div>
@@ -175,7 +177,7 @@
                                     </td>
                                     <td>
                                         <a href="{{url('/repository/'.$repo->repositorycategory.'/'.$repo->slug)}}">
-                                        {{$repo->title }}
+                                            {{$repo->title }}
                                         </a>
                                     </td>
                                     <td>
@@ -225,63 +227,60 @@
     </div>
 
     <script>
-
-      $(document).ready(function () {
-
-                
-        $('#department').on('change', changeAdminsData);
-        // $('#session_year').on('select2:select', changeSessionData);
-        // $('#session_month').on('select2:select', changeSessionData);
-
-        function changeAdminsData(){
-
-          var dep = $('#department :selected').val();
-          
-          if(dep != ""){
-            
-            window.location.href='/admin?department='+dep;
-
-          }
-          else{
-
-            window.location.href='/admin';
-
-          }
-        }
-    });
+        $(document).ready(function () {
 
 
-    $(document).ready(function () {
-        
-        $('#faculty').on('change', changeSitesData);
-        // $('#session_year').on('select2:select', changeSessionData);
-        // $('#session_month').on('select2:select', changeSessionData);
+            $('#department').on('change', changeAdminsData);
+            // $('#session_year').on('select2:select', changeSessionData);
+            // $('#session_month').on('select2:select', changeSessionData);
 
-        function changeSitesData(){
+            function changeAdminsData() {
 
-          
-            var dep = $('#department :selected').val();
-    
-            
-           var fac = $('#faculty :selected').val();
-            
-           if(dep != "" && fac != ""){
+                var dep = $('#department :selected').val();
 
-            window.location='/admin?department='+dep + '&faculty=' + fac;
+                if (dep != "") {
 
-           }
-           else if(dep == "" && fac != ""){
+                    window.location.href = '/admin?department=' + dep;
 
-             window.location='/admin?faculty=' + fac;
+                } else {
 
-           }
-           else if(dep != "" && fac == ""){
+                    window.location.href = '/admin';
 
-                window.location.href='/admin?department='+dep;
+                }
+            }
+        });
 
-           }
 
-        }
-    });
-</script>
+        $(document).ready(function () {
+
+            $('#faculty').on('change', changeSitesData);
+            // $('#session_year').on('select2:select', changeSessionData);
+            // $('#session_month').on('select2:select', changeSessionData);
+
+            function changeSitesData() {
+
+
+                var dep = $('#department :selected').val();
+
+
+                var fac = $('#faculty :selected').val();
+
+                if (dep != "" && fac != "") {
+
+                    window.location = '/admin?department=' + dep + '&faculty=' + fac;
+
+                } else if (dep == "" && fac != "") {
+
+                    window.location = '/admin?faculty=' + fac;
+
+                } else if (dep != "" && fac == "") {
+
+                    window.location.href = '/admin?department=' + dep;
+
+                }
+
+            }
+        });
+
+    </script>
     @endsection

@@ -10,9 +10,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ResearchProjectController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -80,6 +86,8 @@ class ResearchProjectController extends Controller
             }
             
         });
+
+        Alert::success('Created', 'Research Project Created Succesfully');
         
         return redirect('/profile/'.Auth::user()->slug);
 
@@ -162,6 +170,8 @@ class ResearchProjectController extends Controller
             
         });
         
+        Alert::success('Updated', 'Research Project Updated Succesfully');
+
         return redirect('/profile/'.Auth::user()->slug); 
     }
 
