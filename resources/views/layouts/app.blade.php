@@ -17,8 +17,9 @@
         <link href=" bulma-calendar/dist/css/bulma-calendar.min.css" rel="stylesheet">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <style>
-        #scrollable-dropdown-menu .tt-dataset {
-            /* height: 210px; */
+        #scrollable-dropdown-menu .tt-menu {
+
+            max-height: 160px;
             overflow-y: auto;
             width: 270px;
         }
@@ -141,82 +142,80 @@
     <script src="{{ asset('js/script.js') }}"></script>
 
     <script>
-        $(document).ready(function () {
-            var bloodhoundUsers = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.whitespace,
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                remote: {
-                    url: '/search/users?q=%QUERY%',
-                    wildcard: '%QUERY%'
-                },
-            });
-            var bloodhoundRepo = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.whitespace,
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                remote: {
-                    url: '/search/repository?q=%QUERY%',
-                    wildcard: '%QUERY%'
-                },
-            });
-            $('#scrollable-dropdown-menu #search').typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1,
-            }, {
-                name: 'users',
-                source: bloodhoundUsers,
-                display: function (data) {
-
-                    return data.searchable
-                        .name //Input value to be set when you select a suggestion.
-
-                },
-                templates: {
-
-                    header: '<div height = 20px>',
-                    // empty: [
-                    //     '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
-                    // ],
-                    suggestion: function (data) {
-
-                        return '<div class="box" style="margin:0px; height:70px; padding-top:10px"><a href="/profile/' +
-                            data.searchable.slug +
-                            '"><article class="media">  <div class="media-content"> <div class="content"> <p> <strong>' +
-                            data.searchable.name + '</strong><br><small>' + data.searchable
-                            .department_details.name + '</p> </div> </article></div>'
-
-                    },
-                    footer: '</div>'
-                }
-            }, {
-                name: 'Repository',
-                source: bloodhoundRepo,
-                display: function (data) {
-
-                    return data.searchable
-                        .title //Input value to be set when you select a suggestion.
-
-                },
-                templates: {
-
-                    header: '<div height = 20px>',
-                    // empty: [
-                    //     '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
-                    // ],
-                    suggestion: function (data) {
-
-                        return '<div class="box" style="margin:0px; height:70px; padding-top:10px"><a href="/repository/' +
-                            data.url + '/' + data.searchable.slug +
-                            '"><article class="media">  <div class="media-content"> <div class="content"> <p> <strong>' +
-                            data.searchable.title + '</strong><br><small>' + data.url +
-                            '</small> @<small>' + data.searchable.user.name +
-                            '</small></p></div> </article></div>'
-
-                    },
-                    footer: '</div>'
-                }
-            });
+         $(document).ready(function () {
+        var bloodhoundUsers = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '/search/users?q=%QUERY%',
+                wildcard: '%QUERY%'
+            },
         });
+        var bloodhoundRepo = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '/search/repository?q=%QUERY%',
+                wildcard: '%QUERY%'
+            },
+        });
+        $('#scrollable-dropdown-menu #search').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1,
+        }, {
+            name: 'users',
+            source: bloodhoundUsers,
+            display: function (data) {
+
+                return data.searchable.name //Input value to be set when you select a suggestion.
+
+            },
+            templates: {
+
+                header: '<div height = 20px><b>Users</b></div>',
+                // empty: [
+                //     '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
+                // ],
+                suggestion: function (data) {
+
+                    return '<div class="box" style="margin:0px; height:70px; padding-top:10px; "><a href="/profile/' +
+                        data.searchable.slug +
+                        '"><article class="media">  <div class="media-content"> <div class="content"> <p> <strong>' +
+                        data.searchable.name + '</strong><br><small>' + data.searchable
+                        .department_details.name + '</p> </div> </article></div>'
+
+                },
+                footer: '</div>'
+            }
+        }, {
+            name: 'repository',
+            source: bloodhoundRepo,
+            display: function (data) {
+
+                return data.searchable.title //Input value to be set when you select a suggestion.
+
+            },
+            templates: {
+
+                header: '<div height = 20px><b>Repository</b></div>',
+                // empty: [
+                //     '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
+                // ],
+                suggestion: function (data) {
+
+                    return '<div class="box" style="margin:0px; height:70px; padding-top:10px;"><a href="/repository/' +
+                        data.url + '/' + data.searchable.slug +
+                        '"><article class="media">  <div class="media-content"> <div class="content"> <p> <strong>' +
+                        data.searchable.title + '</strong><br><small>' + data.url +
+                        '</small> @<small>' + data.searchable.user.name +
+                        '</small></p></div> </article></div>'
+
+                },
+                footer: '</div>'
+            }
+        });
+    });
 
     </script>
     @include('sweetalert::alert')

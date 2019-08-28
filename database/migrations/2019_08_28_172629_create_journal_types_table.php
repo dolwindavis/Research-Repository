@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResearchActivitiesTable extends Migration
+class CreateJournalTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateResearchActivitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('research_activities', function (Blueprint $table) {
+        Schema::create('journal_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('host');
-            $table->string('activity_category');
             $table->string('name');
-            $table->string('activity_type');
-            $table->date('date');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateResearchActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('research_activities');
+        Schema::dropIfExists('journal_types');
     }
 }

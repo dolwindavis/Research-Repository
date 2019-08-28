@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResearchActivitiesTable extends Migration
+class CreateResearchAgenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateResearchActivitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('research_activities', function (Blueprint $table) {
+        Schema::create('research_agencies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('host');
-            $table->string('activity_category');
             $table->string('name');
-            $table->string('activity_type');
-            $table->date('date');
+            $table->bigInteger('category_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateResearchActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('research_activities');
+        Schema::dropIfExists('research_agencies');
     }
 }

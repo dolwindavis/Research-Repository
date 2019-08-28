@@ -29,4 +29,20 @@ class ResearchProject extends Model implements Searchable
            $url
         );
     }
+
+    public function researchrole()
+    {
+        return $this->belongsTo(ResearchRole::class,'user_role');
+    }
+
+    public function researchagency()
+    {
+        return $this->belongsTo(ResearchAgency::class,'agency');
+    }
+
+    public function researchcategory()
+    {
+        return $this->belongsTo(ResearchCategory::class,'research_category');
+    }
+
 }

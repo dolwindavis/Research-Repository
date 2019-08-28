@@ -19,6 +19,11 @@ class Book extends Model implements Searchable
         return $this->hasOne('App\Upload');
     }
 
+    public function authorship()
+    {
+        return $this->belongsTo(Authorship::class,'authorship');
+    }
+
     public function getSearchResult(): SearchResult
     {
         $url="Books";

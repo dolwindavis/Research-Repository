@@ -109,7 +109,7 @@ class AdminController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'fac_id' => $request->facultyid,
-            'department_id' => Auth::user()->id,
+            'department_id' => 0,
             'password' => Hash::make($request->password),
             'slug' => Str::slug($request->name.$request->facultyid),
             'role' => 'admin'
@@ -120,87 +120,87 @@ class AdminController extends Controller
 
 
 
-    public function departmentIndex(){
+    // public function departmentIndex(){
 
-        $showrepository = new ShowRepository();
+    //     $showrepository = new ShowRepository();
 
-        $repositorycount =  $showrepository->totalRepositoryCount();
-        $department =Department::all();
+    //     $repositorycount =  $showrepository->totalRepositoryCount();
+    //     $department =Department::all();
 
-        return view('admin.department',compact('department','repositorycount'));
+    //     return view('admin.department',compact('department','repositorycount'));
 
-    }
+    // }
 
-    public function addDepartmentIndex(){
+    // public function addDepartmentIndex(){
 
-        $showrepository = new ShowRepository();
+    //     $showrepository = new ShowRepository();
 
-        $repositorycount =  $showrepository->totalRepositoryCount();
+    //     $repositorycount =  $showrepository->totalRepositoryCount();
 
-        $department = null;
+    //     $department = null;
 
-        return view('admin.departments',compact('repositorycount','department'));
+    //     return view('admin.departments',compact('repositorycount','department'));
 
-    }
+    // }
 
-    public function addDepartment(Request $request){
+    // public function addDepartment(Request $request){
 
 
-        $request->validate([
+    //     $request->validate([
 
-            'departmentName' => 'required',
+    //         'departmentName' => 'required',
             
-        ]);
+    //     ]);
 
-        $departmentName = $request->departmentName;
+    //     $departmentName = $request->departmentName;
 
-        $department =new Department;
+    //     $department =new Department;
 
-        $department->name = $departmentName;
+    //     $department->name = $departmentName;
 
-        $department->save();
+    //     $department->save();
 
-        return back();
+    //     return back();
 
-    }
-    public function removeDepartment($id){
+    // }
+    // public function removeDepartment($id){
 
-        $depatment=Department::where('id',$id)->delete();
+    //     $depatment=Department::where('id',$id)->delete();
         
-        return redirect()->action(
+    //     return redirect()->action(
 
-            'AdminController@departmentIndex'
-        );
+    //         'AdminController@departmentIndex'
+    //     );
         
 
-    }
-    public function editDepartment($id){
+    // }
+    // public function editDepartment($id){
 
-        $department=Department::where('id',$id)->first();
+    //     $department=Department::where('id',$id)->first();
 
-        $showrepository = new ShowRepository();
+    //     $showrepository = new ShowRepository();
 
-        $repositorycount =  $showrepository->totalRepositoryCount();
+    //     $repositorycount =  $showrepository->totalRepositoryCount();
 
-        return view('admin.departments',compact('repositorycount','department'));
+    //     return view('admin.departments',compact('repositorycount','department'));
 
 
-    }
-    public function updateDepartment(Request $request,$id){
+    // }
+    // public function updateDepartment(Request $request,$id){
 
-        // dd($request->all());
+    //     // dd($request->all());
 
-        $department=Department::where('id',$id)->first();
+    //     $department=Department::where('id',$id)->first();
 
-        $department->name=$request->departmentName;
+    //     $department->name=$request->departmentName;
 
-        $department->save();
+    //     $department->save();
 
-        return redirect()->action(
+    //     return redirect()->action(
 
-            'AdminController@departmentIndex'
-        );
-    }
+    //         'AdminController@departmentIndex'
+    //     );
+    // }
     public function allRepository(Request $request)
     {
         $showrepository = new ShowRepository();

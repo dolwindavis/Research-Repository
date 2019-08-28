@@ -197,7 +197,7 @@ class BookController extends Controller
                     $file = Input::file('upload');
                     $info = pathinfo(storage_path().$file->getClientOriginalName());
                     $ext = $info['extension'];
-                    // // return $ext;
+
                     $title = Str::slug($request->title, '-');
                     $file->move(public_path().'/uploads/',date('m-d-Y_H-i-s').'_'.$title.'.'.$ext);
 
