@@ -204,7 +204,7 @@
                             <div class="text-center text-muted mb-4">
                                 <big><b>Add Department</b></big>
                             </div>
-                            <form role="form" method="Post" action="{{url('/admin/department/add')}}">
+                            <form role="form" method="Post" action="{{url('/admin/department')}}">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <div class="input-group input-group-alternative">
