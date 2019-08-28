@@ -39,13 +39,12 @@ class DepartmentController extends Controller
         $validatedData = $request->validate([
 
             'name' => 'required | max:255',
-            'category_id' => 'required'
 
         ]);
         
-        $category =ResearchAgency::create($request->all());
+        $category =Department::create($request->all());
  
-        Alert::success('Created','Research Agency Created Sucessfully');
+        Alert::success('Created','Department Created Sucessfully');
         return redirect('/admin/settings');
     }
 
