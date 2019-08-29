@@ -70,7 +70,7 @@ class RepositoryController extends Controller
             }
 
         });
-        
+        dd($searchResult);
         return $searchResults->toJson();
     }
 

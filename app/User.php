@@ -69,7 +69,7 @@ class User extends Authenticatable implements MustVerifyEmail,Searchable
            $this,
            ucwords($this->name),
            ucwords($this->departmentDetails->name),
-           $url
+        //    $url
         );
     }
 }
