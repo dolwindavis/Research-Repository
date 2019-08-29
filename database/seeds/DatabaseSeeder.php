@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('19161412'),
             'role' => 'admin',
             'fac_id' => 'kjcadmin',
-            'department_id' => 0,
+            'department_id' => 1,
             'slug' => 'dolwin-davis-kjcadmin'
         ]);
 

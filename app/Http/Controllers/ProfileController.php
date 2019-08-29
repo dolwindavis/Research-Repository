@@ -32,13 +32,17 @@ class ProfileController extends Controller
 
             $user=Auth::user();
 
+            if(Auth::user()->role == 'admin'){
+
+                return redirect('/admin');
+            }
         }
         else{
 
             
             $user=User::where('slug',$slug)->first();
 
-            if($user == null){
+            if($user == null || $user->role == 'admin'){
 
                 Alert::warning('warning','No Faculty Profile');
                 return back();
