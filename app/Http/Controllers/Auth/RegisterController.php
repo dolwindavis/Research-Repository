@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Department;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -109,7 +110,7 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
         // $this->guard()->login($user);
-        Alert::success('Sucess', 'Welcome to the Research Repository');
+        Alert::success('Success', 'Welcome to the Research Repository');
 
         return $this->registered($request, $user)
                         ?: redirect($this->redirectPath());
