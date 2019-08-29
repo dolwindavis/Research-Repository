@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Book;
 use App\User;
 use App\Journal;
+use App\ResearchProject;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
 use App\Helpers\ShowRepository;
-use App\ResearchProject;
+use Illuminate\Support\Facades\Auth;
 
 class RepositoryController extends Controller
 {
@@ -56,7 +57,8 @@ class RepositoryController extends Controller
     }
 
     public function searchUsers(Request $request)
-    {
+    {   
+
         $searchResults = (new Search())
             ->registerModel(User::class,'name')
             ->search($request->q);

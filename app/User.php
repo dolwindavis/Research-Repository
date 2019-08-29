@@ -64,7 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail,Searchable
     public function getSearchResult(): SearchResult
     {
        $url = route('profile', $this->slug);
-    
+        
         return new \Spatie\Searchable\SearchResult(
            $this,
            ucwords($this->name),
