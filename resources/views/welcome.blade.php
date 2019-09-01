@@ -99,28 +99,19 @@
 <body>
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="container">
-            <div class="navbar-brand">
+        <div class="navbar-brand">
                 <a href="/">
-                    <img src="{{asset('assets/images/kjc-logo-dark.png')}}">
+                    <img src="{{asset('assets/images/kjc-logo-dark.png')}}" height="450px" width="350px">
                 </a>
             </div>
-
-            <!-- <div id="navbarBasicExample" class="navbar-menu">
-                    <div class="navbar-end">
-                        <div class="navbar-item">
-                            <div class="buttons">
-                            <a class="button orange" href="/register">
-                                <strong>Sign up</strong>
-                            </a>
-                            <a class="button is-light" href="/login">
-                                Log in
-                            </a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-
+            <div class="navbar-item">
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+                    data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
             <div id="navbarBasicExample" class="navbar-menu">
                 <div class="navbar-end">
                     @if (Auth::guest())
@@ -136,7 +127,7 @@
                                 <strong>Sign up</strong>
                             </a>
                             <a class="button is-light" href="{{ route('login') }}">
-                                 Log in
+                                Log in
                             </a>
                         </div>
                     </div>
@@ -275,6 +266,31 @@
                 footer: '</div>'
             }
         });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // Get all "navbar-burger" elements
+        var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Check if there are any nav burgers
+        if ($navbarBurgers.length > 0) {
+
+            // Add a click event on each of them
+            $navbarBurgers.forEach(function ($el) {
+                $el.addEventListener('click', function () {
+
+                    // Get the target from the "data-target" attribute
+                    var target = $el.dataset.target;
+                    var $target = document.getElementById(target);
+
+                    // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+                    $el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+
+                });
+            });
+        }
+
     });
 
 </script>

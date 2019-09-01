@@ -36,102 +36,70 @@
             <div class="container">
                 <div class="navbar-brand">
                     <a href="/">
-                        <img src="{{asset('assets/images/kjc-logo-dark.png')}}">
+                        <img src="{{asset('assets/images/kjc-logo-dark.png')}}" height="450px" width="350px">
                     </a>
                 </div>
-
-
-                {{--<div id="navbarBasicExample" class="navbar-menu">
-                        <div class="navbar-end">
-                            <div class="navbar-item">
-                                <div class="buttons">
-                                @if (Auth::guest())       
-                                    <a class="button orange" href="{{ route('register') }}">
-                <strong>Sign up</strong>
-                </a>
-                <a class="button is-light" href="{{ route('login') }}">
-                    Log in
-                </a>
-                @else
-                <a class="navbar-link" href="#">{{ Auth::user()->name }}
-                    <figure class="image is-32x32" style="margin-left:.8rem;">
-                        <img class="is-rounded" src="https://ui-avatars.com/api/{{ Auth::user()->name }}">
-                    </figure>
-                </a>
-                <div class="navbar-dropdown">
-                    <!-- <a class="navbar-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a> -->
-                    <!-- <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                            style="display: none;">
-                                            
-                                        </form> -->
-
-
-                </div>
-                @endif
-            </div>
-    </div>
-    </div>--}}
-
-    <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-end">
-            <div class="navbar-item">
-                <div id="scrollable-dropdown-menu">
-                    <input class="input is-focused" type="text" id="search" placeholder="Search" name="search">
-                </div>
-            </div>
-            @if (Auth::guest())
-            <div class="navbar-item">
-                <div class="buttons">
-
-                    <a class="button orange" href="{{ route('register') }}">
-                        <strong>Sign up</strong>
-                    </a>
-                    <a class="button is-light" href="{{ route('login') }}">
-                        Log in
+                <div class="navbar-item">
+                    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarExample">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
                     </a>
                 </div>
-            </div>
-            @else
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link" href="{{ url('/profile/'.Auth::user()->slug) }}">{{ Auth::user()->name }}
-                    <figure class="image is-32x32" style="margin-left:.8rem;">
-                        <img class="is-rounded" src="https://ui-avatars.com/api/{{ Auth::user()->name }}">
-                    </figure>
-                </a>
-
-                <div class="navbar-dropdown">
-                    <a class="navbar-item" href={{url('journals')}}>
-                        Publications
-                    </a>
-                    <a class="navbar-item" href={{url('books')}}>
-                        Books
-                    </a>
-                    <a class="navbar-item" href={{url('projects')}}>
-                        Research Project
-                    </a>
-                    <hr class="navbar-divider">
-                    <a class="navbar-item"
-                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                        Logout
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-
-                    </form>
+                <div id="navbarExample" class="navbar-menu">
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            <div id="scrollable-dropdown-menu">
+                                <input class="input is-focused" type="text" id="search" placeholder="Search"
+                                    name="search">
+                            </div>
+                        </div>
+                        @if (Auth::guest())
+                        <div class="navbar-item">
+                            <div class="buttons">
+                                <a class="button orange" href="{{ route('register') }}">
+                                    <strong>Sign up</strong>
+                                </a>
+                                <a class="button is-light" href="{{ route('login') }}">
+                                    Log in
+                                </a>
+                            </div>
+                        </div>
+                        @else
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link"
+                                href="{{ url('/profile/'.Auth::user()->slug) }}">{{ Auth::user()->name }}
+                                <figure class="image is-32x32" style="margin-left:.8rem;">
+                                    <img class="is-rounded" src="https://ui-avatars.com/api/{{ Auth::user()->name }}">
+                                </figure>
+                            </a>
+                            <div class="navbar-dropdown">
+                                <a class="navbar-item" href={{url('journals')}}>
+                                    Publications
+                                </a>
+                                <a class="navbar-item" href={{url('books')}}>
+                                    Books
+                                </a>
+                                <a class="navbar-item" href={{url('projects')}}>
+                                    Research Project
+                                </a>
+                                <hr class="navbar-divider">
+                                <a class="navbar-item"
+                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
                 </div>
             </div>
-            @endif
-        </div>
-    </div>
-
-
-
-    </div>
-    </nav>
-    @yield('content')
+        </nav>
+        @yield('content')
     </div>
 
     <!-- Scripts -->
@@ -142,80 +110,111 @@
     <script src="{{ asset('js/script.js') }}"></script>
 
     <script>
-         $(document).ready(function () {
-        var bloodhoundUsers = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.whitespace,
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '/search/users?q=%QUERY%',
-                wildcard: '%QUERY%'
-            },
-        });
-        var bloodhoundRepo = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.whitespace,
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '/search/repository?q=%QUERY%',
-                wildcard: '%QUERY%'
-            },
-        });
-        $('#scrollable-dropdown-menu #search').typeahead({
-            hint: true,
-            highlight: true,
-            minLength: 1,
-        }, {
-            name: 'users',
-            source: bloodhoundUsers,
-            display: function (data) {
+        $(document).ready(function () {
+            var bloodhoundUsers = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/search/users?q=%QUERY%',
+                    wildcard: '%QUERY%'
+                },
+            });
+            var bloodhoundRepo = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/search/repository?q=%QUERY%',
+                    wildcard: '%QUERY%'
+                },
+            });
+            $('#scrollable-dropdown-menu #search').typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 1,
+            }, {
+                name: 'users',
+                source: bloodhoundUsers,
+                display: function (data) {
 
-                return data.searchable.name //Input value to be set when you select a suggestion.
-
-            },
-            templates: {
-
-                header: '<div height = 20px><b>Users</b></div>',
-                // empty: [
-                //     '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
-                // ],
-                suggestion: function (data) {
-
-                    return '<div class="box" style="margin:0px; height:70px; padding-top:10px; "><a href="/profile/' +
-                        data.searchable.slug +
-                        '"><article class="media">  <div class="media-content"> <div class="content"> <p> <strong>' +
-                        data.searchable.name + '</strong><br><small>' + data.searchable
-                        .department_details.name + '</p> </div> </article></div>'
+                    return data.searchable
+                        .name //Input value to be set when you select a suggestion.
 
                 },
-                footer: '</div>'
-            }
-        }, {
-            name: 'repository',
-            source: bloodhoundRepo,
-            display: function (data) {
+                templates: {
 
-                return data.searchable.title //Input value to be set when you select a suggestion.
+                    header: '<div height = 20px><b>Users</b></div>',
+                    // empty: [
+                    //     '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
+                    // ],
+                    suggestion: function (data) {
 
-            },
-            templates: {
+                        return '<div class="box" style="margin:0px; height:70px; padding-top:10px; "><a href="/profile/' +
+                            data.searchable.slug +
+                            '"><article class="media">  <div class="media-content"> <div class="content"> <p> <strong>' +
+                            data.searchable.name + '</strong><br><small>' + data.searchable
+                            .department_details.name + '</p> </div> </article></div>'
 
-                header: '<div height = 20px><b>Repository</b></div>',
-                // empty: [
-                //     '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
-                // ],
-                suggestion: function (data) {
+                    },
+                    footer: '</div>'
+                }
+            }, {
+                name: 'repository',
+                source: bloodhoundRepo,
+                display: function (data) {
 
-                    return '<div class="box" style="margin:0px; height:70px; padding-top:10px;"><a href="/repository/' +
-                        data.url + '/' + data.searchable.slug +
-                        '"><article class="media">  <div class="media-content"> <div class="content"> <p> <strong>' +
-                        data.searchable.title + '</strong><br><small>' + data.url +
-                        '</small> @<small>' + data.searchable.user.name +
-                        '</small></p></div> </article></div>'
+                    return data.searchable
+                        .title //Input value to be set when you select a suggestion.
 
                 },
-                footer: '</div>'
-            }
+                templates: {
+
+                    header: '<div height = 20px><b>Repository</b></div>',
+                    // empty: [
+                    //     '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
+                    // ],
+                    suggestion: function (data) {
+
+                        return '<div class="box" style="margin:0px; height:70px; padding-top:10px;"><a href="/repository/' +
+                            data.url + '/' + data.searchable.slug +
+                            '"><article class="media">  <div class="media-content"> <div class="content"> <p> <strong>' +
+                            data.searchable.title + '</strong><br><small>' + data.url +
+                            '</small> @<small>' + data.searchable.user.name +
+                            '</small></p></div> </article></div>'
+
+                    },
+                    footer: '</div>'
+                }
+            });
         });
-    });
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Get all "navbar-burger" elements
+            var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+          
+            // Check if there are any nav burgers
+            if ($navbarBurgers.length > 0) {
+
+                // Add a click event on each of them
+                $navbarBurgers.forEach(function ($el) {
+                    $el.addEventListener('click', function () {
+
+                        // Get the target from the "data-target" attribute
+                        var target = $el.dataset.target;
+                        var $target = document.getElementById(target);
+
+                        // console.log($target.classList)
+                        // $el.classList.toggle('is-active')
+
+                        // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+                        // $el.classList.toggle('is-active');
+                        // $target.classList.toggle('is-active');
+                        
+                    });
+                });
+            }
+
+        });
 
     </script>
     @include('sweetalert::alert')
