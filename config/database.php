@@ -46,12 +46,12 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'url' => env('JAWSDB_URL','mysql://hrnr668w6bbxrvj0:ce53ls66g15iy9s8@ctgplw90pifdso61.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/jiuxx50tyqu45owx'),
-            'host' => env('DB_HOST','ctgplw90pifdso61.cbetxkdyhwsb.us-east-1.rds.amazonaws.com' ),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE','jiuxx50tyqu45owx'),
-            'username' => env('DB_USERNAME','hrnr668w6bbxrvj0' ),
-            'password' => env('DB_PASSWORD', 'ce53ls66g15iy9s8'),
+            // 'url' => env('JAWSDB_URL','mysql://hrnr668w6bbxrvj0:ce53ls66g15iy9s8@ctgplw90pifdso61.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/jiuxx50tyqu45owx'),
+            'host' => 'ctgplw90pifdso61.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+            'port' =>  '3306',
+            'database' => 'jiuxx50tyqu45owx',
+            'username' =>'hrnr668w6bbxrvj0',
+            'password' => 'ce53ls66g15iy9s8',
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
