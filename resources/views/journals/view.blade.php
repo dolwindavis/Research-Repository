@@ -49,25 +49,32 @@
                                     <div class="control">
                                         <div class="select is-dark">
                                             <select name="journal_category" v-model="cat">
-                                                @if($journal->title != null)
-                                                    @if($journal->journal_category == "Journal")
-                                                        <option value="Journal" selected>Journal</option>
-                                                        <option vlaue="Conference Proceeding">Conference Proceeding</option>
-                                                        <option vlaue="Newsletter">Newsletter</option>
-                                                    @elseif($journal->journal_category == "Conference Proceeding")
-                                                        <option value="Journal">Journal</option>
-                                                        <option vlaue="Conference Proceeding" selected>Conference Proceeding</option>
-                                                        <option vlaue="Newsletter">Newsletter</option>
-                                                    @elseif($journal->journal_category == "Newsletter")
-                                                        <option value="Journal">Journal</option>
-                                                        <option vlaue="Conference Proceeding" selected>Conference Proceeding</option>
-                                                        <option vlaue="Newsletter" selected>Newsletter</option>
+                                                @foreach($data['journalcategory'] as $category)
+                                                    @if($journal->title != null)
+                                                        @if($journal->journal_category == $category->id)
+                                                            <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                                        @else
+                                                            <option value="{{ $category->id }}" >{{ $category->name }}</option>
+                                                                {{--@if($journal->journal_category == "Journal")
+                                                                    <option value="Journal" selected>Journal</option>
+                                                                    <option vlaue="Conference Proceeding">Conference Proceeding</option>
+                                                                    <option vlaue="Newsletter">Newsletter</option>
+                                                                @elseif($journal->journal_category == "Conference Proceeding")
+                                                                    <option value="Journal">Journal</option>
+                                                                    <option vlaue="Conference Proceeding" selected>Conference Proceeding</option>
+                                                                    <option vlaue="Newsletter">Newsletter</option>
+                                                                @elseif($journal->journal_category == "Newsletter")
+                                                                    <option value="Journal">Journal</option>
+                                                                    <option vlaue="Conference Proceeding" selected>Conference Proceeding</option>
+                                                                    <option vlaue="Newsletter" selected>Newsletter</option>--}}
+                                                        @endif
+                                                    @else
+                                                    <!-- <option value="Journal" selected>Journal</option>
+                                                    <option vlaue="Conference Proceeding">Conference Proceeding</option>
+                                                    <option vlaue="Newsletter">Newsletter</option> -->
+                                                        <option value="{{ $category->id }}" >{{ $category->name }}</option>
                                                     @endif
-                                                @else
-                                                <option value="Journal" selected>Journal</option>
-                                                <option vlaue="Conference Proceeding">Conference Proceeding</option>
-                                                <option vlaue="Newsletter">Newsletter</option>
-                                                @endif
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -123,19 +130,25 @@
                                             <div class="control">
                                                 <div class="select is-dark">
                                                     <select name="category">
+                                                    @foreach($data['journaltype'] as $type)
                                                     @if($journal->title != null )
-                                                        @if($journal->category == "National")
+                                                        @if($journal->category == $type->id)
+                                                            <option value="{{ $type->id }}" selected>{{ $type->name }}</option>
+                                                        @else
+                                                            <option value="{{ $type->id }}" >{{ $type->name }}</option>
+                                                       {{-- @if($journal->category == "National")
                                                             <option value="National" selected>National</option>
                                                             <option vlaue="International">Inter National</option>
                                                         @elseif($journal->category == "International")
                                                             <option value="National">National</option>
-                                                            <option vlaue="International" selected>Inter National</option>
+                                                            <option vlaue="International" selected>Inter National</option>--}}
                                                         @endif
                                                     @else
-                                                        <option value="National">National</option>
-                                                        <option vlaue="International">Inter National</option>
-                                                    
+                                                        <!-- <option value="National">National</option>
+                                                        <option vlaue="International">Inter National</option> -->
+                                                        <option value="{{ $type->id }}">{{ $type->name}}</option>
                                                     @endif
+                                                    @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -149,11 +162,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
                         <div class="field is-horizontal">
                             <div class="field-label">
                                 <label class="label">Authorship</label>
@@ -163,25 +171,32 @@
                                     <div class="control">
                                         <div class="select is-dark">
                                             <select name="authorship">
+                                                @foreach($data['authorship'] as $author)   
                                                 @if($journal->title != null )
-                                                    @if($journal->authorship =="First Author") 
-                                                        <option value="First Author" selected>First Author</option>
-                                                        <option vlaue="Second Author">Second Author</option>
-                                                        <option vlaue="Thrid Author">Third Author</option>
-                                                    @elseif($journal->authorship =="Second Author") 
-                                                        <option value="First Author">First Author</option>
-                                                        <option vlaue="Second Author" selected>Second Author</option>
-                                                        <option vlaue="Thrid Author">Third Author</option>
-                                                    @elseif($journal->authorship =="Third Author") 
-                                                        <option value="First Author">First Author</option>
-                                                        <option vlaue="Second Author">Second Author</option>
-                                                        <option vlaue="Thrid Author" selected>Third Author</option>
+                                                    @if($journal->authorship == $author->id)
+                                                        <option value="{{ $author->id }}" selected>{{ $author->name }}</option>
+                                                    @else
+                                                        <option value="{{ $author->id }}" >{{ $author->name }}</option>
+                                                        {{--@if($journal->authorship =="First Author") 
+                                                            <option value="First Author" selected>First Author</option>
+                                                            <option vlaue="Second Author">Second Author</option>
+                                                            <option vlaue="Thrid Author">Third Author</option>
+                                                        @elseif($journal->authorship =="Second Author") 
+                                                            <option value="First Author">First Author</option>
+                                                            <option vlaue="Second Author" selected>Second Author</option>
+                                                            <option vlaue="Thrid Author">Third Author</option>
+                                                        @elseif($journal->authorship =="Third Author") 
+                                                            <option value="First Author">First Author</option>
+                                                            <option vlaue="Second Author">Second Author</option>
+                                                            <option vlaue="Thrid Author" selected>Third Author</option>--}}
                                                     @endif
                                                 @else
-                                                    <option value="First Author">First Author</option>
+                                                    <!-- <option value="First Author">First Author</option>
                                                     <option vlaue="Second Author">Second Author</option>
-                                                    <option vlaue="Thrid Author">Third Author</option>
+                                                    <option vlaue="Thrid Author">Third Author</option> -->
+                                                    <option value="{{ $author->id }}">{{ $author->name }}</option>
                                                 @endif
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

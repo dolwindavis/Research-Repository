@@ -17,13 +17,13 @@ class CreateResearchProjectsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('project_code');
-            $table->string('research_category');
+            $table->bigInteger('research_category')->unsigned();
             $table->integer('department_id');
             $table->integer('duration');
             $table->float('amount');
             $table->string('status');
-            $table->string('user_role');
-            $table->string('agency');  
+            $table->bigInteger('user_role')->unsigned();
+            $table->bigInteger('agency')->unsigned();  
             $table->string('fac_id');
             $table->string('slug');
             $table->timestamps();

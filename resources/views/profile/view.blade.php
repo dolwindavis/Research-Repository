@@ -132,10 +132,19 @@
     <div class='profile-options is-fullwidth'>
       <div class='tabs is-fullwidth is-medium'>
         <ul>
+        <li class='link'>
+            <a href="{{url('/profile/'.$slug) }}">
+              <span class='icon'>
+                <i class='fa fa-list'></i>
+              </span>
+              <span>All</span>
+            </a>
+          </li>
           <li class='link'>
             <a href="{{url('/profile/'.$slug.'?category=books') }}">
               <span class='icon'>
-                <i class='fa fa-list'></i>
+              <i class="fas fa-book-open"></i>
+                <!-- <i class='fa fa-list'></i> -->
               </span>
               <span>BOOKS</span>
             </a>
@@ -143,7 +152,7 @@
           <li class='link'>
             <a href="{{url('/profile/'.$slug.'?category=journals') }}" >
               <span class='icon'>
-                <i class='fa fa-thumbs-up'></i>
+              <i class="far fa-newspaper"></i>
               </span>
               <span>JOURNALS</span>
             </a>
@@ -187,7 +196,7 @@
                   <th>{{$repo->repositorycategory}}</th>
                   <th>{{$repo->publishdate}}</th>
                   <th><a href="{{url('/repository/'.$repo->repositorycategory.'/'.$repo->slug)}}">{{$repo->title }}</a></th>
-                  <th>{{ $repo->authorship }}</th>
+                  <th>{{ $repo->authorships->name }}</th>
                   </a>
               </tr>
             @endforeach

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Book;
 use App\Author;
 use App\Upload;
+use App\Authorship;
 use App\Bibliography;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -30,7 +31,11 @@ class BookController extends Controller
     {
         $book = collect();
         $book->title = null;
-        return view('books.view',compact('book'));
+        $data = [
+
+            'authorship' => Authorship::all()
+        ];
+        return view('books.view',compact('book','data'));
     }
 
     /**
@@ -54,7 +59,6 @@ class BookController extends Controller
 
         $validatedData = $request->validate([
             'title' => 'required',
-            'month' =>'required|numeric',
             'year' => 'required|numeric',
             'book_category' => 'required',
             'chaptertitle' => Rule::requiredIf($request->book_category == 'chapter'),
@@ -62,7 +66,7 @@ class BookController extends Controller
             'vol' => 'numeric',
             'issue' =>'numeric',
             'page' => 'string',
-            'authorship' => 'required|string',
+            'authorship' => 'required',
             'url' => 'required_without:upload|url',
             'upload' => 'required_without:url',
             'publish_detail' => 'required'
@@ -137,7 +141,11 @@ class BookController extends Controller
     public function edit(Book $book)
     {
         $book->upload = Upload::where('work_id',$book->id)->first();
-        return view('books.view',compact('book'));
+        $data = [
+
+            'authorship' => Authorship::all()
+        ];
+        return view('books.view',compact('book','data'));
     }
 
     /**
@@ -169,7 +177,15 @@ class BookController extends Controller
 
             $book->title = $request->title;
             $book->book_category = $request->book_category;
-            if($request->chaptertitle){$book->chapter_title = $request->chaptertitle;}
+            if($request->chaptertitle && $request->book_category == "Chapter"){
+
+                $book->chapter_title = $request->chaptertitle;
+
+            }else{
+                
+                $book->chapter_title = null;
+
+            }
             $book->issn_isbn_no = $request->issn_isbn_no;
             $book->publication_details = $request->publish_detail;
             $book->slug= Str::slug($request->title.$request->issn_isbn_no, '-');

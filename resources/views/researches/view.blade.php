@@ -43,8 +43,12 @@
                                     <div class="control">
                                         <div class="select is-dark">
                                             <select name="research_category" id="researchselector">
-                                                <option value="internal" selected>Internal Projects</option>
-                                                <option value="external">External Projects</option>
+                                                <option value="" selected>Select Category</option>
+                                                @foreach($data['categories'] as $cat)
+                                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                                <!-- <option value="internal" selected>Internal Projects</option>
+                                                <option value="external">External Projects</option> -->
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -61,10 +65,7 @@
                                     <div class="field-body">
                                         <div class="field">
                                             <div class="control">
-                                                <input class="input is-dark" id="project_code" type="text"
-                                                    name="project_code"
-                                                    value="{{ old('project_code') }}"
-                                                    onkeyup="addHyphen(this)" maxlength=9 minlength=9>
+                                                <input class="input is-dark" id="project_code" type="text" name="project_code" value="{{ old('project_code') }}">
                                             </div>
                                             @if ($errors->has('project_code'))
                                             <p class="help is-danger">
@@ -86,10 +87,15 @@
                                     <div class="control">
                                         <div class="select is-dark">
                                             <select name="agency" id="agency">
-                                                <option value="KJC" selected>KJC</option>
+                                                <option value="" selected>Select Agency</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>  
+                                    @if ($errors->has('agency'))
+                                        <p class="help is-danger">
+                                            {{ $errors->first('agency') }}
+                                        </p>
+                                        @endif
                                 </div>
                                 <div class="field is-horizontal">
                                     <div class="field-label">
@@ -100,13 +106,19 @@
                                             <div class="control">
                                                 <div class="select is-dark">
                                                     <select name="department_id" id="">
-                                                        @foreach($departments as $department)
+                                                        @foreach($data['departments'] as $department)
                                                         <option value="{{$department->id }} "> {{ $department->name}}
                                                         </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            @if ($errors->has('department_id'))
+                                        <p class="help is-danger">
+                                            {{ $errors->first('department_id') }}
+                                        </p>
+                                        @endif
                                         </div>
                                     </div>
                                 </div>
@@ -118,9 +130,12 @@
                                         <div class="control">
                                             <div class="select is-dark">
                                                 <select name="user_role">
-                                                    <option value="Principal Investigator" selected>Principal Investigator</option>
-                                                    <option value="Co-Investigator" >Co-Investigator</option>
-
+                                                    <option value="" selected>Select role</option>
+                                                    @foreach($data['roles'] as $role)
+                                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                                    <!-- <option value="Principal Investigator" selected>Principal Investigator</option>
+                                                    <option value="Co-Investigator" >Co-Investigator</option> -->
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -135,7 +150,7 @@
                         </div>
                         <div class="field is-horizontal">
                             <div class="field-label">
-                                <label class="label">Duration</label>
+                                <label class="label">Duration (In Months)</label>
                             </div>
                             <div class="field-body">
                                 <div class="field">
@@ -176,12 +191,13 @@
                             </div>
                             <div class="field-body">
                                 <div class="field is-grouped">
-                                    <div class="control">
+                                    <div class="control"> 
                                         <div class="select is-dark">
                                             <select name="status">
-                                                <option value="Applied" selected>Applied</option>
-                                                <option value="Ongoing" selected>Ongoing</option>
-                                                <option value="Completed" selected>Completed</option>
+                                                <option value="" >Select Status</option>
+                                                <option value="Applied" >Applied</option>
+                                                <option value="Ongoing" >Ongoing</option>
+                                                <option value="Completed" >Completed</option>
                                             </select>
                                         </div>
                                     </div>

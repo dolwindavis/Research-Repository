@@ -30,7 +30,7 @@ class ResearchProject extends Model implements Searchable
         );
     }
 
-    public function researchrole()
+    public function authorships()
     {
         return $this->belongsTo(ResearchRole::class,'user_role');
     }

@@ -53,14 +53,14 @@
                                                 @if($book->title != null)
                                                     @if($book->book_category == "Book")
                                                         <option value="Book" selected>Book</option>
-                                                        <option vlaue="Chaptor">Chapter</option>
+                                                        <option value="Chapter">Chapter</option>
                                                     @elseif($book->book_category == "Chapter")
                                                         <option value="Book" >Book</option>
-                                                        <option vlaue="Chaptor" selected>Chapter</option>
+                                                        <option value="Chapter" selected>Chapter</option>
                                                     @endif
                                                 @else
                                                     <option value="Book">Book</option>
-                                                    <option vlaue="Chaptor">Chapter</option>
+                                                    <option value="Chapter">Chapter</option>
                                                 @endif
                                             </select>
                                         </div>
@@ -142,25 +142,32 @@
                                     <div class="control">
                                         <div class="select is-dark">
                                             <select name="authorship">
-                                            @if($book->title != null )
-                                                    @if($book->authorship =="First Author") 
-                                                        <option value="First Author" selected>First Author</option>
-                                                        <option vlaue="Second Author">Second Author</option>
-                                                        <option vlaue="Thrid Author">Third Author</option>
-                                                    @elseif($book->authorship =="Second Author") 
-                                                        <option value="First Author">First Author</option>
-                                                        <option vlaue="Second Author" selected>Second Author</option>
-                                                        <option vlaue="Thrid Author">Third Author</option>
-                                                    @elseif($book->authorship =="Third Author") 
-                                                        <option value="First Author">First Author</option>
-                                                        <option vlaue="Second Author">Second Author</option>
-                                                        <option vlaue="Thrid Author" selected>Third Author</option>
+                                            @foreach($data['authorship'] as $author)   
+                                                @if($book->title != null )
+                                                    @if($book->authorship == $author->id)
+                                                        <option value="{{ $author->id }}" selected>{{ $author->name }}</option>
+                                                    @else
+                                                        <option value="{{ $author->id }}" >{{ $author->name }}</option>
+                                                        {{--@if($book->authorship =="First Author") 
+                                                            <option value="First Author" selected>First Author</option>
+                                                            <option vlaue="Second Author">Second Author</option>
+                                                            <option vlaue="Thrid Author">Third Author</option>
+                                                        @elseif($book->authorship =="Second Author") 
+                                                            <option value="First Author">First Author</option>
+                                                            <option vlaue="Second Author" selected>Second Author</option>
+                                                            <option vlaue="Thrid Author">Third Author</option>
+                                                        @elseif($book->authorship =="Third Author") 
+                                                            <option value="First Author">First Author</option>
+                                                            <option vlaue="Second Author">Second Author</option>
+                                                            <option vlaue="Thrid Author" selected>Third Author</option>--}}
                                                     @endif
                                                 @else
-                                                    <option value="First Author">First Author</option>
+                                                    <!-- <option value="First Author">First Author</option>
                                                     <option vlaue="Second Author">Second Author</option>
-                                                    <option vlaue="Thrid Author">Third Author</option>
+                                                    <option vlaue="Thrid Author">Third Author</option> -->
+                                                    <option value="{{ $author->id }}">{{ $author->name }}</option>
                                                 @endif
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

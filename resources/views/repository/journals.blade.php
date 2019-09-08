@@ -99,7 +99,7 @@
                                     <b>Journal Category</b>
                                 </td>
                                 <td>
-                                    {{$repository->journal_category}}
+                                    {{$repository->journalcategory->name}}
                                 </td>
                                 <td>
                                 </td>
@@ -109,7 +109,7 @@
                                     <b>Category</b>
                                 </td>
                                 <td>
-                                    {{$repository->category}}
+                                    {{$repository->journaltype->name}}
                                 </td>
                                 <td>
                                 </td>
@@ -119,7 +119,7 @@
                                     <b>Authorship</b> 
                                 </td>
                                 <td>
-                                    {{$repository->authorship}}
+                                    {{$repository->authorships->name}}
                                 </td>
                                 <td>
                                 </td>

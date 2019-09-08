@@ -41,34 +41,73 @@ function addHyphen (element) {
 }
 
 
-$("#bookselector").change(function(){
-  console.log($(this).val())
-  if($(this).val()=="Chapter")
-  {    
-      $("div#chaptertitle").show();
-    // $("#second").val($("#second option:first").val());
-  }
-   else
-   {
-       $("div#chaptertitle").hide();
-   }
+$(document).ready(function() {
+  $("#bookselector").change(function(){
+    
+    if($(this).val()=="Chapter")
+    {    
+        $("div#chaptertitle").show();
+      // $("#second").val($("#second option:first").val());
+    }
+    else
+    {
+        $("div#chaptertitle").hide();
+    }
+  });
+  
 });
 
 $("#researchselector").change(function(){
-    console.log($(this).val())
-  if($(this).val()=="external")
-  {    
-        var agency = '<option value="UGC"> UGC </option> <option value="DST" > DST </option> <option value="VGST" > VGST </option>';
-      
-        document.getElementById("agency").innerHTML =agency;
-      // $("div#internal").show();
-      // $("div#external").hide();
-    // $("#second").val($("#second option:first").val());
-  }
-   else
-   {
-             var agency = '<option value="KJC"> KJC </option>';
-            document.getElementById("agency").innerHTML =agency;
 
-   }
+      var id = $(this).val();
+
+      // $('#agency').find('option').not(':first').remove();
+      $('#agency').find('option').remove();
+
+
+    $.ajax({
+      url: '/getagency/'+id,
+      type: 'get',
+      dataType: 'json',
+      success: function(response){
+
+        var len = 0;
+        if(response != null){
+          len = response.length;
+        }
+
+        if(len > 0){
+          // Read data and create <option >
+          for(var i=0; i<len; i++){
+
+            var id = response[i].id;
+            var name = response[i].name;
+
+            // console.log(name)
+          
+            var option = "<option value='"+id+"'>"+name+"</option>"; 
+
+            $("#agency").append(option); 
+          }
+        }
+
+      }
+   });
+    
+
+  // if($(this).val()=="external")
+  // {    
+  //       var agency = '<option value="UGC"> UGC </option> <option value="DST" > DST </option> <option value="VGST" > VGST </option>';
+      
+  //       document.getElementById("agency").innerHTML =agency;
+  //     // $("div#internal").show();
+  //     // $("div#external").hide();
+  //   // $("#second").val($("#second option:first").val());
+  // }
+  //  else
+  //  {
+  //            var agency = '<option value="KJC"> KJC </option>';
+  //           document.getElementById("agency").innerHTML =agency;
+
+  //  }
 });

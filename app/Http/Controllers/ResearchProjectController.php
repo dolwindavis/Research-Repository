@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Upload;
 use App\Department;
+use App\ResearchAgency;
+use App\ResearchCategory;
 use App\ResearchProject;
+use App\ResearchRole;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,8 +29,17 @@ class ResearchProjectController extends Controller
      */
     public function index()
     {   
-        $departments = Department::all();
-        return view('researches.view',compact('departments'));
+        
+        $data = [
+
+            'departments' => Department::all(),
+            'categories' =>ResearchCategory::all(),
+            'agencies' => ResearchAgency::all(),
+            'roles' => ResearchRole::all()
+
+        ];
+
+        return view('researches.view',compact('data'));
     }
 
     /**
@@ -61,6 +73,7 @@ class ResearchProjectController extends Controller
             'status' => 'required',
         ]);
         
+
         $request->request->add(['fac_id' => Auth::user()->id,
                                 'slug' => Str::slug($request->title.$request->project_code, '-')]);
 
@@ -114,8 +127,16 @@ class ResearchProjectController extends Controller
     {
         $research = ResearchProject::findOrFail($id);
 
-        $departments = Department::all();
-        return view('researches.edit',compact('research','departments'));
+        $data = [
+
+            'departments' => Department::all(),
+            'categories' =>ResearchCategory::all(),
+            'agencies' => ResearchAgency::where('category_id',$research->research_category)->get(),
+            'roles' => ResearchRole::all()
+
+        ];
+
+        return view('researches.edit',compact('research','data'));
     }
 
     /**
@@ -174,6 +195,15 @@ class ResearchProjectController extends Controller
 
         return redirect('/profile/'.Auth::user()->slug); 
     }
+
+
+    public function getAgencyOfCategory($id)
+    {
+        $agency = ResearchAgency::where('category_id',$id)->get();
+
+        return $agency->toJson();
+    }
+
 
     /**
      * Remove the specified resource from storage.

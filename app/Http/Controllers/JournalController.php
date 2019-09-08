@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Author;
+use App\Authorship;
 use App\Upload;
 use App\Journal;
 use App\Bibliography;
+use App\JournalCategory;
+use App\JournalType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -31,7 +34,13 @@ class JournalController extends Controller
     {
         $journal = collect();
         $journal->title = null;
-        return view('journals.view',compact('journal'));
+
+        $data=[
+            'journalcategory' => JournalCategory::all(),
+            'journaltype' => JournalType::all(),
+            'authorship' => Authorship::all() 
+        ];
+        return view('journals.view',compact('journal','data'));
     }
 
     /**
@@ -145,7 +154,12 @@ class JournalController extends Controller
     public function edit(Journal $journal)
     {
         $journal->upload = Upload::where('work_id',$journal->id)->first();
-        return view('journals.view',compact('journal'));
+        $data=[
+            'journalcategory' => JournalCategory::all(),
+            'journaltype' => JournalType::all(),
+            'authorship' => Authorship::all() 
+        ];
+        return view('journals.view',compact('journal','data'));
         
     }
 
@@ -172,7 +186,7 @@ class JournalController extends Controller
             'url' => 'required_without:upload|url',
             'upload' => 'required_without:url',
         ]);
-
+            
         DB::transaction(function() use($request,$journal){
         
             $journal->title = $request->title;

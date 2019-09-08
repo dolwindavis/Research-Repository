@@ -57,6 +57,7 @@ Route::get('/profile/{slug}','ProfileController@index')->name('profile');
 Route::get('/repository/{title}/{filename}/download','RepositoryController@repositoryDownload');
 Route::get('/repository/{category}/{slug}','RepositoryController@index')->name('repository');
 
+Route::get('/getagency/{id}','ResearchProjectController@getAgencyOfCategory');
 //department Routes
 // Route::get('/admin/department','AdminController@departmentIndex');
 // Route::get('/admin/department/add','AdminController@addDepartmentIndex');

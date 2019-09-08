@@ -12,7 +12,7 @@
                             <h4><b>{{$repository->title}}</b></h4>
                         </div>
                     </div>
-                    @if($repository->upload->filename != null)  
+                    @if($repository->upload != null)  
                     <table class="table is-stripped is-fullwidth">
                        <tr> 
                        Files in This Item:
@@ -61,7 +61,7 @@
                                 </td>
                                 @if(Auth::user() && (Auth::user()->id == $repository->user->id || Auth::user()->role == 'admin'))                               
                                 <td>
-                                {{$repository->user->id}}
+                                {{$repository->user->name}}
                                 </td> 
                                 <td>
                                     <a href ="{{url('projects/'.$repository->id.'/edit')}}">
@@ -109,7 +109,7 @@
                                     <b>Research Category</b>
                                 </td>
                                 <td>
-                                    {{$repository->research_category}}
+                                    {{$repository->researchcategory->name}}
                                 </td>
                                 <td>
                                 </td>
@@ -119,7 +119,7 @@
                                     <b>Research Agency</b>
                                 </td>
                                 <td>
-                                    {{$repository->agency}}
+                                    {{$repository->researchagency->name}}
                                 </td>
                                 <td>
                                 </td>
@@ -139,7 +139,7 @@
                                     <b>Authorship</b> 
                                 </td>
                                 <td>
-                                    {{$repository->user_role}}
+                                    {{$repository->authorships->name}}
                                 </td>
                                 <td>
                                 </td>

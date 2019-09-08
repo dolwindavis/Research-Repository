@@ -245,7 +245,7 @@
                                     </td>
                                     <td class="text-left">
                                         <div>
-                                            {{ $repo->authorship }}
+                                            {{ $repo->authorships->name }}
                                         </div>
                                     </td>
                                 </tr>

@@ -131,7 +131,7 @@
                                     <b>Authorship</b> 
                                 </td>
                                 <td>
-                                    {{$repository->authorship}}
+                                    {{$repository->authorships->name}}
                                 </td>
                                 <td>
                                 </td>

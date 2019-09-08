@@ -44,13 +44,20 @@
                                     <div class="control">
                                         <div class="select is-dark">
                                             <select name="research_category" id="researchselector">
-                                                @if($research->research_category == 'internal')
+                                                @foreach($data['categories'] as $cat)
+                                                    @if($research->research_category == $cat->id)
+                                                        <option value="{{$cat->id}}" selected>{{ $cat->name}}</option>
+                                                    @else
+                                                        <option value="{{$cat->id}}" >{{ $cat->name}}</option>    
+                                                    @endif
+                                                <!-- @if($research->research_category == 'internal')
                                                     <option value="internal" selected>Internal Projects</option>
                                                     <option value="external">External Projects</option>
                                                 @else
                                                     <option value="internal">Internal Projects</option>
                                                     <option value="external"selected>External Projects</option>
-                                                @endif
+                                                @endif -->
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -92,7 +99,14 @@
                                     <div class="control">
                                         <div class="select is-dark">
                                             <select name="agency" id="agency">
-                                                @if($research->agency == 'KJC')
+                                                @foreach($data['agencies'] as $agency)
+                                                    @if($agency->id == $research->agency)
+                                                        <option value={{ $agency->id }} selected>{{ $agency->name}}</option>
+                                                    @else
+                                                        <option value={{ $agency->id }} >{{ $agency->name}}</option>
+                                                    @endif
+                                                @endforeach
+                                                <!-- @if($research->agency == 'KJC')
                                                     <option value="KJC" selected>KJC</option>
                                                 @elseif($research->agency == 'UGC')
                                                     <option value="UGC" selected> UGC </option>
@@ -100,7 +114,7 @@
                                                     <option value="DST" selected> DST </option> 
                                                 @elseif($research->agency == 'VGST')
                                                     <option value="VGST" selected> VGST </option>
-                                                @endif
+                                                @endif -->
                                             </select>
                                         </div>
                                     </div>
@@ -113,8 +127,8 @@
                                         <div class="field">
                                             <div class="control">
                                                 <div class="select is-dark">
-                                                    <select name="department_id" id="">
-                                                        @foreach($departments as $department)
+                                                    <select name="department_id" id="agency">
+                                                        @foreach($data['departments'] as $department)
                                                             @if($research->department_id == $department->id)
                                                                 <option value="{{$department->id }} " selected> {{ $department->name}}
                                                             </option>
@@ -137,13 +151,20 @@
                                         <div class="control">
                                             <div class="select is-dark">
                                                 <select name="user_role">
-                                                    @if($research->user_role == "Principal Investigator")
+                                                    @foreach($data['roles'] as $role)
+                                                        @if($research->user_role == $role->id)
+                                                            <option value="{{$role->id }}" selected>{{$role->name}}</option>
+                                                        @else
+                                                            <option value="{{$role->id }}" >{{$role->name}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                    <!-- @if($research->user_role == "Principal Investigator")
                                                         <option value="Principal Investigator" selected>Principal Investigator</option>
                                                         <option value="Co-Investigator" >Co-Investigator</option>
                                                     @else
                                                         <option value="Principal Investigator" >Principal Investigator</option>
                                                         <option value="Co-Investigator" selected>Co-Investigator</option>
-                                                    @endif
+                                                    @endif -->
                                                 </select>
                                             </div>
                                         </div>

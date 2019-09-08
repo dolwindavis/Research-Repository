@@ -129,7 +129,7 @@
                                         <thead class="thead-light">
                                             <tr>
                                                 <th scope="col">SI NO</th>
-                                                <th scope="col">Name</th>ournal type
+                                                <th scope="col">Name</th>
                                                 <th scope="col">Actions</th>
                                             </tr>
                                         </thead>

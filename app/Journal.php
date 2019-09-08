@@ -24,15 +24,15 @@ class Journal extends Model implements Searchable
 
     public function journalcategory()
     {
-        return $this->belongsTo(App\JournalCategory::class,'journal_category');
+        return $this->belongsTo(JournalCategory::class,'journal_category');
     }
 
     public function journaltype()
     {
-        return $this->belongsTo(App\JournalType::class,'category');
+        return $this->belongsTo(JournalType::class,'category');
     }
 
-    public function authorship()
+    public function authorships()
     {
         return $this->belongsTo(Authorship::class,'authorship');
     }

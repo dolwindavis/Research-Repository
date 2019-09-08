@@ -26,7 +26,7 @@ class CreateBooksTable extends Migration
             $table->string('faculty_id');
             $table->bigInteger('user_id')->unsigned(); 
             $table->string('slug')->unique();
-            $table->string('authorship');
+            $table->bigInteger('authorship')->unsigned();
             $table->string('bibliography_vol')->nullable();
             $table->string('bibliography_issue')->nullable();
             $table->string('bibliography_pages')->nullable();

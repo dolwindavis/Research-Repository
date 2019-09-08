@@ -19,15 +19,15 @@ class CreateJournalsTable extends Migration
             $table->integer('date')->nullable();
             $table->integer('month')->nullable();
             $table->integer('year');
-            $table->string('category');
+            $table->bigInteger('category')->unsigned();
             $table->string('journal_name');
-            $table->string('journal_category');
+            $table->bigInteger('journal_category')->unsigned();
             $table->string('issn_isbn_no');
             $table->string('impact_factor')->nullable();
             $table->string('faculty_id');
             $table->bigInteger('user_id')->unsigned(); 
             $table->string('slug')->unique();
-            $table->string('authorship');
+            $table->bigInteger('authorship')->unsigned();
             $table->string('bibliography_vol')->nullable();
             $table->string('bibliography_issue')->nullable();
             $table->string('bibliography_pages')->nullable();
