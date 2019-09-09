@@ -137,7 +137,14 @@
                             <label for="inputState">Research Category</label>
                             <select id="research-category" class="form-control" >
                                 <option value="" selected>All Category</option>
-                                @if($data['researchcategory'] == 'Internal')   
+                                @foreach($data['categories'] as $cat)
+                                    @if($data['researchcategory'] == $cat->id)   
+                                        <option value="{{$cat->id}}" selected>{{$cat->name}}</option>
+                                    @else
+                                        <option value="{{$cat->id}}" >{{$cat->name}}</option>
+                                    @endif
+                                @endforeach  
+                                <!-- @if($data['researchcategory'] == 'Internal')   
                                     <option value="Internal" selected>Internal</option>
                                     <option value="External">External</option>
                                 @elseif($data['researchcategory'] == 'External')
@@ -146,7 +153,7 @@
                                 @else
                                     <option value="Internal">Internal</option>
                                     <option value="External">External</option>
-                                @endif
+                                @endif -->
                             </select>
                         </div>
                          <div class="form-group col-md-2">

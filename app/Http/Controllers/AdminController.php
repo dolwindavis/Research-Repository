@@ -9,6 +9,9 @@ use App\Department;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Helpers\ShowRepository;
+use App\JournalCategory;
+use App\JournalType;
+use App\ResearchCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -54,7 +57,7 @@ class AdminController extends Controller
 
             $repository =$showrepository->departmentRepository($request->department);
 
-            $faculties =User::where('department_id',$request->department)->get();
+            $faculties =User::where([['department_id',$request->department],['role','faculty']])->get();
 
             $department = $request->department;
 
@@ -117,90 +120,7 @@ class AdminController extends Controller
 
         return redirect('/');
     }
-
-
-
-    // public function departmentIndex(){
-
-    //     $showrepository = new ShowRepository();
-
-    //     $repositorycount =  $showrepository->totalRepositoryCount();
-    //     $department =Department::all();
-
-    //     return view('admin.department',compact('department','repositorycount'));
-
-    // }
-
-    // public function addDepartmentIndex(){
-
-    //     $showrepository = new ShowRepository();
-
-    //     $repositorycount =  $showrepository->totalRepositoryCount();
-
-    //     $department = null;
-
-    //     return view('admin.departments',compact('repositorycount','department'));
-
-    // }
-
-    // public function addDepartment(Request $request){
-
-
-    //     $request->validate([
-
-    //         'departmentName' => 'required',
-            
-    //     ]);
-
-    //     $departmentName = $request->departmentName;
-
-    //     $department =new Department;
-
-    //     $department->name = $departmentName;
-
-    //     $department->save();
-
-    //     return back();
-
-    // }
-    // public function removeDepartment($id){
-
-    //     $depatment=Department::where('id',$id)->delete();
         
-    //     return redirect()->action(
-
-    //         'AdminController@departmentIndex'
-    //     );
-        
-
-    // }
-    // public function editDepartment($id){
-
-    //     $department=Department::where('id',$id)->first();
-
-    //     $showrepository = new ShowRepository();
-
-    //     $repositorycount =  $showrepository->totalRepositoryCount();
-
-    //     return view('admin.departments',compact('repositorycount','department'));
-
-
-    // }
-    // public function updateDepartment(Request $request,$id){
-
-    //     // dd($request->all());
-
-    //     $department=Department::where('id',$id)->first();
-
-    //     $department->name=$request->departmentName;
-
-    //     $department->save();
-
-    //     return redirect()->action(
-
-    //         'AdminController@departmentIndex'
-    //     );
-    // }
     public function allRepository(Request $request)
     {
         $showrepository = new ShowRepository();
@@ -293,7 +213,7 @@ class AdminController extends Controller
             'month' => $month,
             'bookcategory' => $bookcategory,
             'faculty' => $faculty
-
+            
         ];
 
         return view('admin.bookview',compact('repository','repositorycount','data','faculties','publishyears','publishmonths'));
@@ -390,8 +310,9 @@ class AdminController extends Controller
             'month' => $month,
             'journalcategory' => $journalcategory,
             'category' => $category,
-            'faculty' => $faculty
-
+            'faculty' => $faculty,
+            'categories' => JournalCategory::all(),
+            'types' => JournalType::all()
         ];
 
         return view('admin.journalview',compact('repository','repositorycount','publishyears','publishmonths','faculties','data'));
@@ -449,8 +370,9 @@ class AdminController extends Controller
 
             'researchcategory' => $researchcategory,
 
-            'status' => $status
+            'status' => $status,
 
+            'categories' =>ResearchCategory::all()
         ];
 
         return view('admin.researchview',compact('repository','repositorycount','faculties','data'));
