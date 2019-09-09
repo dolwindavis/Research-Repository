@@ -136,7 +136,14 @@
                             <label for="inputState">Journal Category</label>
                             <select id="journal-category" class="form-control" >
                                 <option value="" selected>All Category</option>
-                                @if($data['journalcategory'] == 'Journal')
+                                    @foreach($data['categories'] as $cat)
+                                        @if($data['journalcategory'] == $cat->id)
+                                            <option value="{{ $cat->id }}" selected>{{$cat->name}}</option>
+                                        @else
+                                            <option value="{{ $cat->id }}" >{{$cat->name}}</option>
+                                        @endif
+                                    @endforeach
+                                <!-- @if($data['journalcategory'] == 'Journal')
                                 
                                     <option value="Journal" selected>Journal</option>
                                     <option value="Conference Proceeding">Conference Proceeding</option>
@@ -155,14 +162,22 @@
                                     <option value="Journal" >Journal</option>
                                     <option value="Conference Proceeding">Conference Proceeding</option>
                                     <option value="Newsletter">Newsletter</option>
-                                @endif
+                                @endif -->
                             </select>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="inputState">Category</label>
                             <select id="category" class="form-control" >
                                 <option value="" selected>All Category</option>
-                                @if($data['category'] == 'National')
+                                @foreach($data['types'] as $cat)
+                                    @if($data['category'] == $cat->id)
+                                    <option value="{{$cat->id}}" selected>{{$cat->name}}</option>
+
+                                    @else
+                                    <option value="{{$cat->id}}"">{{$cat->name}}</option>
+                                    @endif 
+                                @endforeach     
+                                <!-- @if($data['category'] == 'National')
                                     <option value="National" selected>National</option>
                                     <option value="International">Inter National</option>
                                 @elseif($data['category'] == 'Inter National')
@@ -171,7 +186,7 @@
                                 @else
                                     <option value="National">National</option>
                                     <option value="International">Inter National</option>
-                                @endif
+                                @endif -->
                             </select>
                         </div>
                         <div class="form-group col-md-2">

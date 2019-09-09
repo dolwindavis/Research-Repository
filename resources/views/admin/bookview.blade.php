@@ -133,7 +133,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="inputState">Journal Category</label>
+                            <label for="inputState">Book Category</label>
                             <select id="book-category" class="form-control" >
                                 <option value="" selected>All Category</option>
                                 @if($data['bookcategory'] == 'Book')
