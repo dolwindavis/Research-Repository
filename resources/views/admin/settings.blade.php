@@ -2,6 +2,7 @@
 @section('title','Research Repository | Admin')
 @section('content')
 @include('admin.settings-create-modals')
+@include('admin.settings-edit-modals')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
@@ -48,7 +49,7 @@
                                                 </td>
                                                 <!-- Address -->
                                                 <td>
-                                                    <a href=''>
+                                                    <a href='' data-toggle="modal" data-target="#journal-category{{$key}}">
                                                         <i class="far fa-edit"></i>
                                                     </a>
                                                     <a href="{{ url('/admin/journalcategory/delete/'.$journalcat->id) }}"
@@ -96,7 +97,7 @@
                                                 </td>
                                                 <!-- Address -->
                                                 <td>
-                                                    <a href=''>
+                                                    <a href='' data-toggle="modal" data-target="#journal-type{{$key}}">
                                                         <i class="far fa-edit"></i>
                                                     </a>
                                                     <a href="{{ url('/admin/journaltype/delete/'.$journalcat->id) }}"
@@ -144,7 +145,7 @@
                                                 </td>
                                                 <!-- Address -->
                                                 <td>
-                                                    <a href=''>
+                                                    <a href='' data-toggle="modal" data-target="#authorship{{$key}}">
                                                         <i class="far fa-edit"></i>
                                                     </a>
                                                     <a href="{{ url('/admin/authorship/delete/'.$journalcat->id) }}"
@@ -205,7 +206,7 @@
                                                 </td>
                                                 <!-- Address -->
                                                 <td>
-                                                    <a href=''>
+                                                    <a href='' data-toggle="modal" data-target="#researchcategory{{$key}}">
                                                         <i class="far fa-edit"></i>
                                                     </a>
                                                     <a href="{{ url('/admin/researchcategory/delete/'.$research->id) }}"
@@ -258,7 +259,7 @@
                                                     {{ $research->category->name }}
                                                 </td>
                                                 <td>
-                                                    <a href=''>
+                                                    <a href='' data-toggle="modal" data-target="#researchagency{{$key}}">
                                                         <i class="far fa-edit"></i>
                                                     </a>
                                                     <a href="{{ url('/admin/researchagency/delete/'.$research->id) }}"
@@ -305,7 +306,7 @@
                                                     {{ $research->name }}
                                                 </td>
                                                 <td>
-                                                    <a href=''>
+                                                    <a href='' data-toggle="modal" data-target="#researchrole{{$key}}">
                                                         <i class="far fa-edit"></i>
                                                     </a>
                                                     <a href="{{ url('/admin/researchroles/delete/'.$research->id) }}"
@@ -366,7 +367,7 @@
                                                 </td>
                                                 <!-- Address -->
                                                 <td>
-                                                    <a href=''>
+                                                    <a href='' data-toggle="modal" data-target="#department{{$key}}">
                                                         <i class="far fa-edit"></i>
                                                     </a>
                                                     <a href="{{ url('/admin/department/delete/'.$dep->id) }}"

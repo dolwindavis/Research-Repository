@@ -79,7 +79,15 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $research = Department::find($id);
+
+        $research->name = $request->name;
+
+        $research->save();
+
+        Alert::success('Updated','Department Updated Successfully');
+
+        return redirect('/admin/settings');
     }
 
     /**

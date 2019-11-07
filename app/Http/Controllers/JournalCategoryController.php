@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Journal;
 use App\JournalCategory;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -56,9 +57,15 @@ class JournalCategoryController extends Controller
 
     public function update(Request $request,$id)
     {
+        $journal = JournalCategory::find($id);
+
+        $journal->name = $request->name;
+
+        $journal->save();
+
         Alert::success('Updated','Research Activity Updated Successfully');
 
-        return redirect('/admin/activity');
+        return redirect('/admin/settings');
     }
 
 

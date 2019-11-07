@@ -59,8 +59,13 @@ class AuthorshipController extends Controller
 
     public function update(Request $request,$id)
     {
-        
-        Alert::success('Updated','Research Activity Updated Successfully');
+        $author = Authorship::find($id);
+
+        $author->name = $request->name;
+
+        $author->save();
+
+        Alert::success('Updated','Authorship Updated Successfully');
 
         return redirect('/admin/settings');
     }

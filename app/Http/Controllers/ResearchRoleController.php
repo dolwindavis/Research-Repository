@@ -57,9 +57,15 @@ class ResearchRoleController extends Controller
 
     public function update(Request $request,$id)
     {
-        Alert::success('Updated','Research Activity Updated Successfully');
+        $research = ResearchRole::find($id);
 
-        return redirect('/admin/activity');
+        $research->name = $request->name;
+
+        $research->save();
+
+        Alert::success('Updated','Research Role Updated Successfully');
+
+        return redirect('/admin/settings');
     }
 
 

@@ -88,7 +88,7 @@
                                                                 <span class="input-group-text">
                                                                     <i class="ni ni-calendar-grid-58"></i></span>
                                                             </div>
-                                                            <input class="form-control datepicker" placeholder="Select date" type="text" value="">
+                                                            <input class="form-control datepicker" placeholder="Select date" type="text" value="" name="date">
                                                         </div>
                                                     </div>
                                                 </div>

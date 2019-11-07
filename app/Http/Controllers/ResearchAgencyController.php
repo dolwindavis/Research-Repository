@@ -56,10 +56,18 @@ class ResearchAgencyController extends Controller
     }
 
     public function update(Request $request,$id)
-    {
-        Alert::success('Updated','Research Activity Updated Successfully');
+    {   
+        $research = ResearchAgency::find($id);
 
-        return redirect('/admin/activity');
+        $research->name = $request->name;
+
+        $research->category_id = $request->category_id; 
+
+        $research->save();
+
+        Alert::success('Updated','Research Agency Updated Successfully');
+
+        return redirect('/admin/settings');
     }
 
 

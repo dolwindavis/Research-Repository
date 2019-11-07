@@ -46,7 +46,7 @@
 
                     <div class="field is-horizontal">
                         <div class="field-label">
-                            <label class="label">Facility ID</label>
+                            <label class="label">Faculty ID</label>
                         </div>
 
                         <div class="field-body">

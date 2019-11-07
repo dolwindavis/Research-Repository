@@ -59,8 +59,13 @@ class JournalTypeController extends Controller
 
     public function update(Request $request,$id)
     {
-        
-        Alert::success('Updated','Research Activity Updated Successfully');
+        $journal = JournalType::find($id);
+
+        $journal->name = $request->name;
+
+        $journal->save();
+
+        Alert::success('Updated','Journal Type Updated Successfully');
 
         return redirect('/admin/settings');
     }

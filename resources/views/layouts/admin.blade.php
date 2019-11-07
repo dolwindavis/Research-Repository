@@ -89,6 +89,10 @@
                                 <i class="ni ni-calendar-grid-58"></i>
                                 <span>Activity</span>
                             </a>
+                            <a href="/admin/research/create" class="dropdown-item">
+                                <i class="ni ni-calendar-grid-58"></i>
+                                <span>Create Admin</span>
+                            </a>
                             {{--<a href="{{url('/admin/department')}}" class="dropdown-item">
                             <i class="ni ni-support-16"></i>
                             <span>Departments</span>

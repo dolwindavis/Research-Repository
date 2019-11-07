@@ -116,6 +116,13 @@
             <div class="card shadow">
                 <div class="card-header bg-transparent">
                     <h3 class="mb-0">Research Activities</h3>
+                    <a href="{{url("\admin\activity\create") }}">
+                    <div class="text-right">
+                        <button type="button" class="btn btn-sm btn-primary">
+                       Add New Activity
+                        </button> 
+                    </div>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="row">
